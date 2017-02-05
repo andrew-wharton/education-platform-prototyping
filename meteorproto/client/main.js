@@ -1,5 +1,5 @@
 /**
  *
  */
-
-import '/imports/startup/client/index.js';
+import './main.html';
+import '/imports/startup/client';
