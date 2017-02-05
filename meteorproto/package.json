@@ -1,0 +1,24 @@
+{
+  "name": "meteorproto",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "assert-plus": "1.0.0",
+    "babel-runtime": "6.18.0",
+    "bcrypt": "0.8.7",
+    "lodash": "4.13.1",
+    "material-ui": "0.16.4",
+    "meteor-node-stubs": "~0.2.0",
+    "react": "15.4.2",
+    "react-addons-pure-render-mixin": "15.4.2",
+    "react-dom": "15.4.2",
+    "react-intl": "2.1.5",
+    "react-modal": "1.4.0",
+    "react-router": "2.8.1",
+    "react-tap-event-plugin": "2.0.1",
+    "vasync": "1.6.4",
+    "verror": "1.6.0"
+  }
+}
