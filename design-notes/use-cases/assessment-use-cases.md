@@ -1,13 +1,13 @@
-# Testing Use Cases
+# Assessment Use Cases
 
-0. Educator should be able to create a Test.
+0. Educator should be able to create an Assessment.
 
 	0. Educator should be able to create a Multiple Choice Question (MCQ).
 		0. MCQ should have a question.
 		0. MCQ should have at least 2 answers.
 		0. MCQ should have at least one correct answer.
 		
-	0. Educator should be able to add a MCQ to a Test.
+	0. Educator should be able to add a MCQ to an Assessment.
 	
 		0. Educator should be able to update the question without modifying the original question.
 			- Note: This should invlove most likely duplicating/cloning the question and editing, not editing in place, with a link back to the parent question, for the ability to pull in changes.
