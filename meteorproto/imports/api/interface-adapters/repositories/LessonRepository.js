@@ -2,20 +2,19 @@
  * @fileOverview
  */
 var LessonRepository = new Mongo.Collection("lessons", {
-  transform: function (le) {
-    //mediaData.signedDownloadUrl =
+  transform: function (lesson) {
     return new Lesson()
   }
 });
 
 // TODO add schema
-//LessonTemplateRepository.attachSchema(InfoPageSchema);
+//LessonRepository.attachSchema(InfoPageSchema);
 
 Meteor.startup(function () {
   if(Meteor.isServer) {
     // TODO add indexes
-    //LessonTemplateRepository._ensureIndex({"path": 1});
+    //LessonRepository._ensureIndex({"path": 1});
   }
 });
 
-export { LessonTemplateRepository }
+export { LessonRepository }

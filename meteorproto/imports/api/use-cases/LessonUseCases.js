@@ -7,8 +7,8 @@ import { Random } from 'meteor/random';
  */
 export class LessonUseCases {
 
-  constructor(deps) {
-    this._lessonTemplateRepository = deps._lessonTemplateRepository;
+  constructor({lessonRepository}) {
+    this._lessonRepository = lessonRepository;
   }
 
   /**
@@ -17,12 +17,12 @@ export class LessonUseCases {
   createLesson({date}, cb) {
 
     var lesson = {
-      id: Random.id(),
+      _id: Random.id(),
       date: date,
       program: []
     };
 
-    this._lessonTemplateRepository.insert(lesson, cb);
+    this._lessonRepository.insert(lesson, cb);
 
   }
 
@@ -33,9 +33,9 @@ export class LessonUseCases {
    */
   addProgramItem(lessonId, item) {
 
-    // TODO assert to check item schema
+    // TODO assert to check item data
 
-    this._lessonTemplateRepository.update(
+    this._lessonRepository.update(
       {
         _id: lessonId
       },
