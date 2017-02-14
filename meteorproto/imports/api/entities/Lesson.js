@@ -6,9 +6,9 @@
  */
 export class Lesson {
 
-  constructor(data) {
-    this.date = data.date;
-    this.program = data.program;
+  constructor() {
+    this.date = new Date();
+    this.program = [];
   }
 
 }
