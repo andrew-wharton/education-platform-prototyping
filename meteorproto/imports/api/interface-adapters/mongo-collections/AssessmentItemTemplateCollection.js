@@ -42,17 +42,17 @@ var AssessmentItemTemplateSchema = new SimpleSchema({
   }
 });
 
-var AssessmentItemTemplateRepository = new Mongo.Collection(
+var AssessmentItemTemplateCollection = new Mongo.Collection(
   "assessment_item_templates"
 );
 
-AssessmentItemTemplateRepository.attachSchema(AssessmentItemTemplateSchema);
+AssessmentItemTemplateCollection.attachSchema(AssessmentItemTemplateSchema);
 
 Meteor.startup(function () {
   if(Meteor.isServer) {
     // TODO add indexes
-    //AssessmentItemTemplateRepository._ensureIndex({"path": 1});
+    //AssessmentItemTemplateCollection._ensureIndex({"path": 1});
   }
 });
 
-export { AssessmentItemTemplateRepository }
+export { AssessmentItemTemplateCollection }

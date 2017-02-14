@@ -19,15 +19,15 @@ var AssessmentTemplateSchema = new SimpleSchema({
   }
 });
 
-var AssessmentTemplateRepository = new Mongo.Collection("assessment_templates");
+var AssessmentTemplateCollection = new Mongo.Collection("assessment_templates");
 
-AssessmentTemplateRepository.attachSchema(AssessmentTemplateSchema);
+AssessmentTemplateCollection.attachSchema(AssessmentTemplateSchema);
 
 Meteor.startup(function () {
   if(Meteor.isServer) {
     // TODO add indexes
-    //AssessmentTemplateRepository._ensureIndex({"field": 1});
+    //AssessmentTemplateCollection._ensureIndex({"field": 1});
   }
 });
 
-export { AssessmentTemplateRepository }
+export { AssessmentTemplateCollection }
