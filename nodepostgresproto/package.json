@@ -1,0 +1,8 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "dependencies": {
+    "awesome-typescript-loader": "3.0.4-rc.2",
+    "source-map-loader": "0.1.6"
+  }
+}

@@ -1,24 +1,26 @@
 "use strict";
 
-/**
- * Created by andrew on 7/2/17.
- */
-import { LessonRepository,
-  AssessmentTemplateRepository,
-  AssessmentItemTemplateRepository
-} from '/imports/api/interface-adapters/repositories';
-import {
-  LessonUseCases,
-  AssessmentTemplateUseCases
-} from '/imports/api/use-cases';
+import MongoLessonRepository from
+  '/imports/api/lesson/MongoLessonRepository.js';
+import AssessmentTemplateRepository from
+  '/imports/api/assessment/AssessmentTemplateRepository';
+import  AssessmentItemTemplateRepository from
+  '/imports/api/assessment/AssessmentItemTemplateRepository';
 
+import LessonUseCases from
+  '/../lib/lesson/LessonUseCases.js';
+import AssessmentTemplateUseCases from
+  '/../lib/assessment/AssessmentTemplateUseCases.js';
+
+// Wire the required repositories into the use cases.
 var lessonUseCases = new LessonUseCases({
-  lessonRepository: LessonRepository
+  lessonRepository: MongoLessonRepository
 });
-var assessmentTemplateUseCases = new AssessmentTemplateUseCases({
-  assessmentTemplateRepository: AssessmentTemplateRepository,
-  assessmentItemTemplateRepository: AssessmentItemTemplateRepository
-});
+
+//var assessmentTemplateUseCases = new AssessmentTemplateUseCases({
+//  assessmentTemplateRepository: AssessmentTemplateRepository,
+//  assessmentItemTemplateRepository: AssessmentItemTemplateRepository
+//});
 
 /**
  * Helper function to log results from use cases for testing
@@ -32,6 +34,13 @@ function logResult(err, result) {
   }
 }
 
+/**
+ * @fileOverview Here we create Meteor methods which allow us to call use cases
+ * from the client-side application. We use methods as they expose a much
+ * smaller surface area to have to secure than having the Collection API exposed
+ * to the client and having to secure that.
+ *
+ */
 Meteor.methods({
 
   "lesson/create"({date}) {
@@ -39,20 +48,23 @@ Meteor.methods({
     lessonUseCases.createLesson({date: date}, logResult);
   },
 
-  "lesson/addNewItemToProgram"(lessonId, item) {
-    // TODO checks
-    lessonUseCases.addProgramItem(lessonId, item, logResult);
+  "lesson/addNewItemToProgram"(lessonId, assessmentItemId) {
+    check(lessonId, String);
+    check(assessmentItemId, String);
+
+    lessonUseCases.addAssessmentTemplateToLessonProgram(lessonId,
+      assessmentItemId, logResult);
   },
 
-  "assessment/create"(assessment) {
-    console.log(assessment);
-    // TODO checks
-    assessmentTemplateUseCases.createAssessment(assessment, logResult);
-  },
-
-  "assessment/addNewItem"(item, assessmentId) {
-    // TODO checks
-    assessmentTemplateUseCases.addNewItemToAssessment(item, assessmentId, logResult);
-  }
+  //"assessment/create"(assessment) {
+  //  console.log(assessment);
+  //  // TODO checks
+  //  assessmentTemplateUseCases.createAssessment(assessment, logResult);
+  //},
+  //
+  //"assessment/addNewItem"(item, assessmentId) {
+  //  // TODO checks
+  //  assessmentTemplateUseCases.addNewItemToAssessment(item, assessmentId, logResult);
+  //}
 
 });
