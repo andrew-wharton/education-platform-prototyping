@@ -17,6 +17,14 @@ which will be used as a framework to provide some generic components to support
 the use cases ie. persistence (to MongoDB), server/client connectivity (DDP), 
 user auth etc.
 
+### Running the app
+
+0. Clone the repository
+0. Install [Meteor](https://www.meteor.com/)
+0. `$ cd meteorproto`
+0. `$ meteor npm install`
+0. `$ meteor`
+
 ## Node/Postgres
 
 Under [/nodepostgresproto](/nodepostgresproto) is a framework-less application 
