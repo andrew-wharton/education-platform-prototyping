@@ -5,7 +5,9 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
-  ApplicationRootPage
+  ApplicationRootPage,
+  HomePage,
+  PlanningRootPageContainer
 } from '/imports/ui/pages';
 
 /*
@@ -26,7 +28,11 @@ Meteor.startup(function () {
     <MuiThemeProvider muiTheme={muiTheme}>
       <IntlProvider locale={'en-AU'} >
         <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
-          <Route path="/" component={ApplicationRootPage} />
+          <Route path="/" component={ApplicationRootPage} >
+            <IndexRoute component={HomePage} />
+            <Route path="/planning" component={PlanningRootPageContainer} />
+
+          </Route>
         </Router>
       </IntlProvider>
     </MuiThemeProvider>, document.getElementById("react-root"));
