@@ -1,6 +1,5 @@
 "use strict";
 
-//import LessonRepository from '/lib/lesson/LessonRepository.js';
 import LessonMongoCollection from './LessonMongoCollection.js';
 
 /**

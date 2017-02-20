@@ -25,14 +25,16 @@ export class LessonUseCases {
 
   /**
    *
-   * @param lesson
+   * @param lessonId
    * @param assessmentTemplate
    */
-  addAssessmentTemplateToLessonProgram(lesson, assessmentTemplate) {
+  addAssessmentTemplateToLessonProgram(lessonId, assessment) {
 
-    lesson.program.push(assessmentTemplate);
+    //lesson.program.push(assessmentTemplate);
 
-    this._lessonRepository.update(lesson);
+
+    //this._lessonRepository.update(lesson);
+    this._lessonRepository.addItemToProgram(lessonId, item)
 
   }
 

@@ -13,7 +13,7 @@ var ChoiceSchema = new SimpleSchema({
   }
 });
 
-var AssessmentItemTemplateSchema = new SimpleSchema({
+var AssessmentItemSchema = new SimpleSchema({
   // The type of item, eg. Multiple Choice, Short Answer, Essay, Project
   type: {
     type: String
@@ -42,17 +42,17 @@ var AssessmentItemTemplateSchema = new SimpleSchema({
   }
 });
 
-var AssessmentItemTemplateCollection = new Mongo.Collection(
-  "assessment_item_templates"
+var AssessmentItemCollection = new Mongo.Collection(
+  "assessment_items"
 );
 
-AssessmentItemTemplateCollection.attachSchema(AssessmentItemTemplateSchema);
+AssessmentItemCollection.attachSchema(AssessmentItemSchema);
 
 Meteor.startup(function () {
   if(Meteor.isServer) {
     // TODO add indexes
-    //AssessmentItemTemplateCollection._ensureIndex({"path": 1});
+    //AssessmentItemCollection._ensureIndex({"path": 1});
   }
 });
 
-export { AssessmentItemTemplateCollection }
+export { AssessmentItemCollection }
