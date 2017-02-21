@@ -16,10 +16,10 @@ export const MainToolBar = React.createClass({
         <Link to="/planning">
           <div>Planning</div>
         </Link>
-        <Link to="/performance">
+        <Link to="/presentation">
           <div>Presentation</div>
         </Link>
-        <Link to="/">
+        <Link to="/reporting">
           <div>Reporting</div>
         </Link>
       </nav>

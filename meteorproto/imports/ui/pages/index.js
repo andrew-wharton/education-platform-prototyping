@@ -4,3 +4,4 @@
 export * from './ApplicationRootPage.jsx';
 export * from './HomePage.jsx';
 export * from './PlanningRootPageContainer';
+export * from './PresentationRootPageContainer';

@@ -7,7 +7,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
   ApplicationRootPage,
   HomePage,
-  PlanningRootPageContainer
+  PlanningRootPageContainer,
+  PresentationRootPageContainer,
+  ReportingRootPageContainer
 } from '/imports/ui/pages';
 
 /*
@@ -26,12 +28,13 @@ const muiTheme = getMuiTheme({
 Meteor.startup(function () {
   ReactDOM.render(
     <MuiThemeProvider muiTheme={muiTheme}>
-      <IntlProvider locale={'en-AU'} >
+      <IntlProvider locale="en-AU" >
         <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
           <Route path="/" component={ApplicationRootPage} >
             <IndexRoute component={HomePage} />
             <Route path="/planning" component={PlanningRootPageContainer} />
-
+            <Route path="/presentation" component={PresentationRootPageContainer} />
+            <Route path="/reporting" component={ReportingRootPageContainer} />
           </Route>
         </Router>
       </IntlProvider>
