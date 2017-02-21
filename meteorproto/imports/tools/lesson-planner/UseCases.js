@@ -5,7 +5,7 @@ import Lesson from './Lesson.js';
 /**
  * Created by andrew on 6/2/17.
  */
-export class LessonUseCases {
+export class UseCases {
 
   constructor({lessonRepository}) {
     this._lessonRepository = lessonRepository;
