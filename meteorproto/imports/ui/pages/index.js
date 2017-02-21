@@ -3,5 +3,6 @@
  */
 export * from './ApplicationRootPage.jsx';
 export * from './HomePage.jsx';
-export * from './PlanningRootPageContainer';
-export * from './PresentationRootPageContainer';
+export * from './PlanningRootPageContainer.jsx';
+export * from './PresentationRootPageContainer.jsx';
+export * from './ReportingRootPageContainer.jsx';
