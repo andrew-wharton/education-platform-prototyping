@@ -3,11 +3,12 @@
  */
 SimpleSchema.debug = true;
 
-var AssessmentTemplateSchema = new SimpleSchema({
+var AssessmentSchema = new SimpleSchema({
   title: {
-    type: String
+    type: String,
+    optional: true
   },
-  items: {
+  itemIds: {
     type: [String]
   },
   tags: {
@@ -19,15 +20,15 @@ var AssessmentTemplateSchema = new SimpleSchema({
   }
 });
 
-var AssessmentTemplateCollection = new Mongo.Collection("assessment_templates");
+var AssessmentMongoCollection = new Mongo.Collection("assessments");
 
-AssessmentTemplateCollection.attachSchema(AssessmentTemplateSchema);
+AssessmentMongoCollection.attachSchema(AssessmentSchema);
 
 Meteor.startup(function () {
   if(Meteor.isServer) {
     // TODO add indexes
-    //AssessmentTemplateCollection._ensureIndex({"field": 1});
+    //AssessmentMongoCollection._ensureIndex({"field": 1});
   }
 });
 
-export { AssessmentTemplateCollection }
+export { AssessmentMongoCollection }

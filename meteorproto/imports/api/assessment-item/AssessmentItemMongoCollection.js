@@ -42,17 +42,17 @@ var AssessmentItemSchema = new SimpleSchema({
   }
 });
 
-var AssessmentItemCollection = new Mongo.Collection(
+var AssessmentItemMongoCollection = new Mongo.Collection(
   "assessment_items"
 );
 
-AssessmentItemCollection.attachSchema(AssessmentItemSchema);
+AssessmentItemMongoCollection.attachSchema(AssessmentItemSchema);
 
 Meteor.startup(function () {
   if(Meteor.isServer) {
     // TODO add indexes
-    //AssessmentItemCollection._ensureIndex({"path": 1});
+    //AssessmentItemMongoCollection._ensureIndex({"path": 1});
   }
 });
 
-export { AssessmentItemCollection }
+export { AssessmentItemMongoCollection }
