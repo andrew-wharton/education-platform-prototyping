@@ -10,7 +10,9 @@ export const PlanningRootPage = React.createClass({
       <div className="planning-root-page">
         <MainToolBar />
         <main>
-          <h1>Planning</h1>
+          {
+            this.props.children
+          }
         </main>
       </div>
     );
