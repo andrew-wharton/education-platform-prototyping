@@ -7,8 +7,9 @@
 export default class Lesson {
 
   constructor() {
+    this.id = "";
     this.startAt = new Date();
-    this.endedAt = null;
+    this.endAt = null;
     this.program = [];
   }
 

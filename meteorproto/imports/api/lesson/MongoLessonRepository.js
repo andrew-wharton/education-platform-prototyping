@@ -1,5 +1,6 @@
 "use strict";
 
+import Lesson from '/imports/api/lesson/Lesson';
 import LessonMongoCollection from './LessonMongoCollection';
 
 /**
@@ -32,9 +33,12 @@ export default class MongoLessonRepository {
     });
 
     if(lessonData) {
-      // TODO move this to a factory
+      // TODO refactor into to a factory
       var lesson = new Lesson();
+      lesson.id = lessonData._id;
       lesson.startAt = lessonData.startAt;
+      lesson.endAt = lessonData.endAt;
+      lesson.program = lessonData.program;
       return lesson
     } else {
       return null
@@ -47,7 +51,17 @@ export default class MongoLessonRepository {
    * @param {object} spec
    */
   find(spec) {
-    return this._mongoCollection.find(spec).fetch();
+    var lessonDataArray = this._mongoCollection.find(spec).fetch();
+
+    return lessonDataArray.map(function(lessonData) {
+      // TODO refactor into to a factory
+      var lesson = new Lesson();
+      lesson.id = lessonData._id;
+      lesson.startAt = lessonData.startAt;
+      lesson.endAt = lessonData.endAt;
+      lesson.program = lessonData.program;
+      return lesson;
+    })
   }
 
   /**

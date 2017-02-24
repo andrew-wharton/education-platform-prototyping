@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Link } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data'
 import LessonRepository from '/imports/api/lesson/MongoLessonRepository'
 //import './CalendarPlanningTermPage.less';
@@ -28,7 +29,9 @@ export class CalendarPlanningTermPage extends Component {
 
   renderLessonLink(lesson) {
     return (
-      <li key={lesson._id}>{lesson._id}</li>
+      <li key={lesson.id}>
+        <Link to={`/planning/lessons/${lesson.id}`}>{lesson.id}</Link>
+      </li>
     );
   }
 
