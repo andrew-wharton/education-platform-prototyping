@@ -22,14 +22,25 @@ export class CalendarPlanningTermPage extends Component {
             calendar view with one week per row, similar to the 'month' view in
             macOS's Calendar, or the 'multiweek' view in the calendar in
             Thunderbird.</p>
+          <figure>
+            <img src="//static.whartonlabs.com/edu-proto/images/calendar-month-view.png" />
+            <figcaption>Fig. 1 - 'month' view in
+              macOS's Calendar</figcaption>
+          </figure>
           <p>Each day could perhaps give a summary of the days lessons etc and
             link to a calendar day view.</p>
+          <p>Below are links to specific lessons. They could be represented in
+            the UI in the same way as the coloured boxes in the calendar above.</p>
+          <ul>
+            {
+              this.props.lessons.map(this.renderLessonLink)
+            }
+          </ul>
+          <p>
+            <button onClick={this.props.createLesson}>Create new lesson</button>
+          </p>
         </section>
-        <ul>
-          {
-            this.props.lessons.map(this.renderLessonLink)
-          }
-        </ul>
+
       </div>
     );
   }
