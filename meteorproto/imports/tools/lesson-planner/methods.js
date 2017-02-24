@@ -1,8 +1,8 @@
 "use strict";
 
-//import MongoLessonRepository from '/imports/api/lesson/MongoLessonRepository.js';
-//import {LessonUseCases} from '/imports/api/lesson/LessonUseCases.js';
+import {LessonUseCases} from '/imports/api/lesson/LessonUseCases.js';
 
+var lessonUseCases = new LessonUseCases();
 
 /**
  * Helper function to log results from use cases for testing
@@ -25,9 +25,12 @@ function logResult(err, result) {
  */
 Meteor.methods({
 
-  "tools/lesson-planner/create"({date}) {
-    // TODO checks
-    lessonUseCases.createLesson({date: date}, logResult);
+  "lesson/create"({ startAtDateString }) {
+    check(startAtDateString, String);
+
+    var lesson = new Lesson();
+    lesson.startAt = new Date.parse(startAtDateString);
+    lessonUseCases.createLesson(lesson, logResult);
   },
 
   "tools/lesson-planner/addNewItemToProgram"(lessonId, assessmentItemId) {

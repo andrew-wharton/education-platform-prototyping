@@ -12,30 +12,23 @@ export class UseCases {
   }
 
   /**
-   * Creates a new lesson template
+   * Creates a new lesson template.
+   *
+   * @param {lesson} lesson
+   * @param {function} callback
    */
-  createLesson({date}, cb) {
-
-    var lesson = new Lesson();
-    lesson.date = date;
-
-    this._lessonRepository.create(lesson, cb);
-
+  createLesson(lesson, callback) {
+    this._lessonRepository.create(lesson, callback);
   }
 
   /**
+   * Pushes an Assessment to the lesson program
    *
-   * @param lessonId
-   * @param assessmentTemplate
+   * @param {string} lessonId
+   * @param {Assessment} assessment
    */
-  addAssessmentTemplateToLessonProgram(lessonId, assessment) {
-
-    //lesson.program.push(assessmentTemplate);
-
-
-    //this._lessonRepository.update(lesson);
+  addAssessmentToLessonProgram(lessonId, assessment) {
     this._lessonRepository.addItemToProgram(lessonId, item)
-
   }
 
 }
