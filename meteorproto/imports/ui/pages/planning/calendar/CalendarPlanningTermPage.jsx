@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { Link } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data'
 import LessonRepository from '/imports/api/lesson/MongoLessonRepository'
-//import './CalendarPlanningTermPage.less';
+import './CalendarPlanningTermPage.less';
 
 var lessonRepository = new LessonRepository();
 
@@ -16,8 +16,15 @@ export class CalendarPlanningTermPage extends Component {
 
   render() {
     return (
-      <div>
-        CalendarPlanningTermPage
+      <div className="calendar-planning-term-page">
+        <section className="placeholder-content">
+          <p>My initial UI concept idea for this page is an infinite scrolling
+            calendar view with one week per row, similar to the 'month' view in
+            macOS's Calendar, or the 'multiweek' view in the calendar in
+            Thunderbird.</p>
+          <p>Each day could perhaps give a summary of the days lessons etc and
+            link to a calendar day view.</p>
+        </section>
         <ul>
           {
             this.props.lessons.map(this.renderLessonLink)
