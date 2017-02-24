@@ -1,15 +1,15 @@
 "use strict";
 
-import LessonMongoCollection from './LessonMongoCollection.js';
+import LessonMongoCollection from './LessonMongoCollection';
 
 /**
- * Created by andrew on 14/2/17.
+ * Responsible for adapting a persistence agnostic interface to the
+ * Meteor specific Collection interface
  */
-export class MongoLessonRepository {
+export default class MongoLessonRepository {
 
   /**
    *
-   * @param mongoCollection
    */
   constructor() {
 

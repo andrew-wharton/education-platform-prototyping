@@ -14,10 +14,8 @@ var LessonSchema = new SimpleSchema({
   }
 });
 
-
 var LessonMongoCollection = new Mongo.Collection("lessons");
 
-// TODO add schema
 LessonMongoCollection.attachSchema(LessonSchema);
 
 Meteor.startup(function () {
@@ -27,4 +25,4 @@ Meteor.startup(function () {
   }
 });
 
-export { LessonMongoCollection }
+export default LessonMongoCollection

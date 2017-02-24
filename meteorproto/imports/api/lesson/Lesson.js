@@ -2,9 +2,9 @@
 
 
 /**
- * Created by andrew on 6/2/17.
+ * Lesson domain class/entity
  */
-export class Lesson {
+export default class Lesson {
 
   constructor() {
     this.startAt = new Date();

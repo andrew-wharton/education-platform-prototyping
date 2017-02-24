@@ -1,12 +1,17 @@
 "use strict";
 
-import {LessonUseCases} from '/imports/api/lesson/LessonUseCases.js';
+import Lesson from '/imports/api/lesson/Lesson';
+import LessonPlannerUseCases from '/imports/tools/lesson-planner/LessonPlannerUseCases';
+import MongoLessonRepository from '/imports/api/lesson/MongoLessonRepository';
 
-var lessonUseCases = new LessonUseCases();
+var lessonPlannerUseCases = new LessonPlannerUseCases({
+  lessonRepository: new MongoLessonRepository()
+});
 
 /**
  * Helper function to log results from use cases for testing
  * @param err
+ * @param result
  */
 function logResult(err, result) {
   if(err) {
@@ -25,12 +30,11 @@ function logResult(err, result) {
  */
 Meteor.methods({
 
-  "lesson/create"({ startAtDateString }) {
-    check(startAtDateString, String);
-
+  "lesson/create"({ startAt }) {
+    // TODO checks
     var lesson = new Lesson();
-    lesson.startAt = new Date.parse(startAtDateString);
-    lessonUseCases.createLesson(lesson, logResult);
+    lesson.startAt = new Date(startAt);
+    lessonPlannerUseCases.createLesson(lesson, logResult);
   },
 
   "tools/lesson-planner/addNewItemToProgram"(lessonId, assessmentItemId) {

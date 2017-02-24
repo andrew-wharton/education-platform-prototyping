@@ -1,11 +1,9 @@
 "use strict";
 
-import Lesson from './Lesson.js';
-
 /**
  * Created by andrew on 6/2/17.
  */
-export class UseCases {
+export default class LessonPlannerUseCases {
 
   constructor({lessonRepository}) {
     this._lessonRepository = lessonRepository;
@@ -14,7 +12,7 @@ export class UseCases {
   /**
    * Creates a new lesson template.
    *
-   * @param {lesson} lesson
+   * @param {Lesson} lesson
    * @param {function} callback
    */
   createLesson(lesson, callback) {
