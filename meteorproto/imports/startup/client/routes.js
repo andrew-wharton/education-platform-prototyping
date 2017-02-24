@@ -13,12 +13,12 @@ import { HomePage }
 // Planning pages
 import { PlanningRootPageContainer }
   from '/imports/ui/pages/planning/PlanningRootPageContainer.jsx';
-import { CalendarPlanningTermPage }
+import { CalendarPlanningTermPageContainer }
   from '/imports/ui/pages/planning/calendar/CalendarPlanningTermPage.jsx';
 import { CalendarPlanningDayPage }
   from '/imports/ui/pages/planning/calendar/CalendarPlanningDayPage.jsx';
-import { LessonPlanningPage }
-  from '/imports/ui/pages/planning/lesson/LessonPlanningPage.jsx';
+import { LessonPlanningPageContainer }
+  from '/imports/ui/pages/planning/lesson/LessonPlanningPageContainer.jsx';
 import { AssessmentCreator }
   from '/imports/ui/pages/planning/assessment-creator/AssessmentCreator.jsx';
 
@@ -51,11 +51,11 @@ Meteor.startup(function () {
           <Route path="/" component={ApplicationRootPage} >
             <IndexRoute component={HomePage} />
             <Route path="planning" component={PlanningRootPageContainer}>
-              <IndexRoute component={CalendarPlanningTermPage} />
+              <IndexRoute component={CalendarPlanningTermPageContainer} />
               <Route path="date/:date"
                      component={CalendarPlanningDayPage} />
               <Route path="lessons/:lessonId"
-                     component={LessonPlanningPage} >
+                     component={LessonPlanningPageContainer} >
                 <Route path="lessons/:lessonId/assessment-creator/:assessmentId"
                        component={AssessmentCreator}>
                 </Route>

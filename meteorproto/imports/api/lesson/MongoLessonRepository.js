@@ -44,6 +44,14 @@ export default class MongoLessonRepository {
 
   /**
    *
+   * @param {object} spec
+   */
+  find(spec) {
+    return this._mongoCollection.find(spec).fetch();
+  }
+
+  /**
+   *
    * @param {Lesson} lesson
    * @param {function} callback
    */

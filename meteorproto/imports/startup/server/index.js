@@ -3,3 +3,5 @@
  */
 
 import '/imports/tools/methods.js';
+
+import './publications';
