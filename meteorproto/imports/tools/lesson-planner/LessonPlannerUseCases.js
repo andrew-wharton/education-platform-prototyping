@@ -1,10 +1,16 @@
 "use strict";
 
 /**
- * Created by andrew on 6/2/17.
+ * Responsible for implementing the application functionality required for the
+ * assessment creation and editing.
  */
 export default class LessonPlannerUseCases {
 
+  /**
+   *
+   *
+   * @param lessonRepository - An implementation of the LessonRepository interface
+   */
   constructor({lessonRepository}) {
     this._lessonRepository = lessonRepository;
   }

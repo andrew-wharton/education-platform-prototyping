@@ -5,7 +5,9 @@ import VError from 'verror';
 import assert from 'assert-plus';
 
 /**
- * Created by andrew on 21/2/17.
+ * Responsible for implementing the application functionality required for the
+ * assessment creation and editing.
+ *
  */
 export class AssessmentCreatorUseCases {
 

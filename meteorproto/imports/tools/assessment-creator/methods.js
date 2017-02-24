@@ -14,7 +14,7 @@ const useCases = new AssessmentCreatorUseCases({
 });
 
 /**
- * Created by andrew on 21/2/17.
+ * Exposes Meteor methods to the client so it can call the use cases
  */
 Meteor.methods({
 

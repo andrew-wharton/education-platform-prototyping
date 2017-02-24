@@ -26,7 +26,6 @@ function logResult(err, result) {
  * from the client-side application. We use methods as they expose a much
  * smaller surface area to have to secure than having the Collection API exposed
  * to the client and having to secure that.
- *
  */
 Meteor.methods({
 
