@@ -28,9 +28,13 @@ export default class MongoLessonRepository {
    */
   get(id, callback) {
 
+    console.log(id);
+
     var lessonData = this._mongoCollection.findOne({
       _id: id
     });
+
+    console.log(lessonData);
 
     if(lessonData) {
       // TODO refactor into to a factory
@@ -118,6 +122,43 @@ export default class MongoLessonRepository {
    * @param {function} callback
    */
   delete(lesson, callback) {
+
+  }
+
+  /**
+   * Maps/links/adds a content item to the program of a lesson.
+   *
+   * For the MongoDB implementation, this is implemented as an embedded
+   * array of assessmentItem IDs.
+   *
+   * @param lessonId
+   * @param assessmentId
+   * @param {function} callback
+   */
+  addItemToProgram(lessonId, assessmentId, callback) {
+
+    var query = {
+      _id: lessonId
+    };
+
+    var update = {
+      $push: {
+        program: assessmentId
+      }
+    };
+
+    if(callback) {
+      this._mongoCollection.update(
+        query,
+        update,
+        callback
+      );
+    } else {
+      return this._mongoCollection.update(
+        query,
+        update
+      );
+    }
 
   }
 

@@ -31,4 +31,4 @@ Meteor.startup(function () {
   }
 });
 
-export { AssessmentMongoCollection }
+export default AssessmentMongoCollection

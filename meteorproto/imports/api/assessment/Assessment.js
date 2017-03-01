@@ -3,7 +3,7 @@
 /**
  * Created by andrew on 6/2/17.
  */
-export class Assessment {
+export default class Assessment {
 
   constructor() {
     this.id = null;

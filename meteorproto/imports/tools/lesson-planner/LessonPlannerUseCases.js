@@ -11,8 +11,9 @@ export default class LessonPlannerUseCases {
    *
    * @param lessonRepository - An implementation of the LessonRepository interface
    */
-  constructor({lessonRepository}) {
+  constructor({lessonRepository, assessmentRepository}) {
     this._lessonRepository = lessonRepository;
+    this._assessmentRepository = assessmentRepository;
   }
 
   /**
@@ -30,9 +31,21 @@ export default class LessonPlannerUseCases {
    *
    * @param {string} lessonId
    * @param {Assessment} assessment
+   * @param callback
    */
-  addAssessmentToLessonProgram(lessonId, assessment) {
-    this._lessonRepository.addItemToProgram(lessonId, item)
+  addAssessmentToLessonProgram(lessonId, assessment, callback) {
+
+    var self = this;
+
+    // Create the new Assessment
+    this._assessmentRepository.create(assessment, function(err, assessmentId) {
+      // Then add it to the lesson in the lessonRepository
+      console.log(lessonId);
+      console.log(assessmentId);
+      self._lessonRepository.addItemToProgram(lessonId, assessmentId, callback);
+    });
+
+
   }
 
 }

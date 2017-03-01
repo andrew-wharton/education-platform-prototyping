@@ -1,11 +1,21 @@
 "use strict";
 
+
+import { Random } from 'meteor/random'
 import Lesson from '/imports/api/lesson/Lesson';
 import LessonPlannerUseCases from '/imports/tools/lesson-planner/LessonPlannerUseCases';
 import MongoLessonRepository from '/imports/api/lesson/MongoLessonRepository';
+import Assessment from '/imports/api/assessment/Assessment';
+import MongoAssessmentRepository from '/imports/api/assessment/MongoAssessmentRepository';
+import LessonContentItemType
+  from '/imports/api/lessonContentItem/LessonContentItemType';
+import LessonMongoCollection from '/imports/api/lesson/LessonMongoCollection';
+import LessonContentItemMongoCollection
+  from '/imports/api/lessonContentItem/LessonContentItemMongoCollection'
 
 var lessonPlannerUseCases = new LessonPlannerUseCases({
-  lessonRepository: new MongoLessonRepository()
+  lessonRepository: new MongoLessonRepository(),
+  assessmentRepository: new MongoAssessmentRepository()
 });
 
 /**
@@ -36,12 +46,40 @@ Meteor.methods({
     lessonPlannerUseCases.createLesson(lesson, logResult);
   },
 
-  "tools/lesson-planner/addNewItemToProgram"(lessonId, assessmentItemId) {
-    check(lessonId, String);
-    check(assessmentItemId, String);
+  "tools/lesson-planner/addNewItemToProgram"(lessonId) {
 
-    lessonUseCases.addAssessmentTemplateToLessonProgram(lessonId,
-      assessmentItemId, logResult);
+    console.log('addNewItemToProgram');
+
+    var assessmentId = Random.id();
+
+    // TODO move this to a use case
+    LessonContentItemMongoCollection.insert({
+      _id: assessmentId,
+      type: LessonContentItemType.ASSESSMENT
+    });
+
+    LessonMongoCollection.update(
+      {
+      _id: lessonId
+      },
+      {
+        $push: {
+          program: assessmentId
+        }
+      }
+    );
+
+    //check(lessonId, String);
+    //check(assessment, Object);
+
+
+    //var assessment = new Assessment();
+    //
+    //lessonPlannerUseCases.addAssessmentToLessonProgram(
+    //  lessonId,
+    //  assessment,
+    //  logResult
+    //);
   }
 
 });

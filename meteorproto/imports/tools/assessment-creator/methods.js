@@ -1,8 +1,8 @@
 "use strict";
 
-import { Assessment } from '/imports/api/assessment/Assessment.js';
-import { MongoAssessmentRepository }
-  from '/imports/api/assessment/MongoAssessmentRepository.js';
+import Assessment from '/imports/api/assessment/Assessment.js';
+import MongoAssessmentRepository
+  from '/imports/api/assessment/MongoAssessmentRepository';
 import { MongoAssessmentItemRepository }
   from '/imports/api/assessment-item/MongoAssessmentItemRepository.js';
 import { AssessmentCreatorUseCases } from './AssessmentCreatorUseCases.js';

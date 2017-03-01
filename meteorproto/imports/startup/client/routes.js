@@ -18,7 +18,7 @@ import { CalendarPlanningTermPageContainer }
 import { CalendarPlanningDayPage }
   from '/imports/ui/pages/planning/calendar/CalendarPlanningDayPage.jsx';
 import { LessonPlanningPageContainer }
-  from '/imports/ui/pages/planning/lesson/LessonPlanningPageContainer.jsx';
+  from '/imports/ui/pages/planning/lesson/LessonPlanningPageContainer';
 import { AssessmentCreator }
   from '/imports/ui/pages/planning/assessment-creator/AssessmentCreator.jsx';
 
@@ -56,7 +56,7 @@ Meteor.startup(function () {
                      component={CalendarPlanningDayPage} />
               <Route path="lessons/:lessonId"
                      component={LessonPlanningPageContainer} >
-                <Route path="lessons/:lessonId/assessment-creator/:assessmentId"
+                <Route path="assessment-creator/:assessmentId"
                        component={AssessmentCreator}>
                 </Route>
               </Route>

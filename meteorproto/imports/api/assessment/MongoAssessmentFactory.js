@@ -1,5 +1,7 @@
 "use strict";
 
+import Assessment from './Assessment';
+
 /**
  * Created by andrew on 21/2/17.
  */

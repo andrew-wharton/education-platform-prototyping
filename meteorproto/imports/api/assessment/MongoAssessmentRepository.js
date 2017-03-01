@@ -1,14 +1,18 @@
 "use strict";
 
 import VError from 'verror';
-import { AssessmentMongoCollection } from './AssessmentMongoCollection.js';
-import { MongoAssessmentFactory } from './MongoAssessmentFactory.js';
+import AssessmentMongoCollection from './AssessmentMongoCollection';
+import { MongoAssessmentFactory } from './MongoAssessmentFactory';
 import { Random } from 'meteor/random';
 
 /**
  * Created by andrew on 14/2/17.
  */
-export class MongoAssessmentRepository {
+export default class MongoAssessmentRepository {
+
+  constructor() {
+    this._mongoCollection = AssessmentMongoCollection;
+  }
 
   /**
    *
@@ -17,7 +21,7 @@ export class MongoAssessmentRepository {
    */
   get(id, callback) {
     try {
-      var assessmentData = AssessmentMongoCollection.findOne(id).fetch();
+      var assessmentData = this._mongoCollection.findOne(id).fetch();
       var assessment = MongoAssessmentFactory.new(assessmentData);
       setTimeout(function() {
         callback(null, assessment);
@@ -31,12 +35,39 @@ export class MongoAssessmentRepository {
 
   /**
    *
+   * @param {object} spec
+   */
+  find(spec) {
+
+    var query = {};
+
+    if(spec._id instanceof Array) {
+      query._id = {
+        $in: spec._id
+      }
+    }
+
+    var lessonDataArray = this._mongoCollection.find(query).fetch();
+
+    return lessonDataArray.map(function(lessonData) {
+      // TODO refactor into to a factory
+      var lesson = new Lesson();
+      lesson.id = lessonData._id;
+      lesson.startAt = lessonData.startAt;
+      lesson.endAt = lessonData.endAt;
+      lesson.program = lessonData.program;
+      return lesson;
+    })
+  }
+
+  /**
+   *
    * @param {Assessment} assessment
    * @param {function} callback - function of the form function(err, id)
    */
   create(assessment, callback) {
     if(assessment.isValid()) {
-      AssessmentMongoCollection.insert({
+      this._mongoCollection.insert({
         title: assessment.title,
         itemIds: assessment.itemIds,
         tags: assessment.tags,
@@ -47,7 +78,7 @@ export class MongoAssessmentRepository {
         } else {
           callback(null, _id);
         }
-      })
+      });
     }
   }
 
