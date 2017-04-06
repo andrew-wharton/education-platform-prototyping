@@ -4,10 +4,8 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Link } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data'
-import LessonRepository from '/imports/api/lesson/MongoLessonRepository'
+import LessonMongoCollection from '/imports/api/lesson/LessonMongoCollection.js'
 import './CalendarPlanningTermPage.less';
-
-var lessonRepository = new LessonRepository();
 
 /**
  *
@@ -62,7 +60,7 @@ export const CalendarPlanningTermPageContainer = createContainer(function (props
 
   // Open a subscription to all lessons
   var lessonHandle = Meteor.subscribe('lessons', {});
-  var lessons = lessonRepository.find({});
+  var lessons = LessonMongoCollection.find({}).fetch();
 
   return {
     lessonsReady: lessonHandle.ready(),

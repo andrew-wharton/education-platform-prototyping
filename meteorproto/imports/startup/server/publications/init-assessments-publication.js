@@ -10,7 +10,7 @@ import AssessmentMongoCollection
 
 Meteor.publish("assessments", function (selector, options, publisher) {
 
-  // TODO restrict access to lessons which the user has access to
+  // TODO restrict access to assessments which the user has access to
   return AssessmentMongoCollection.find(selector, options);
 
 });

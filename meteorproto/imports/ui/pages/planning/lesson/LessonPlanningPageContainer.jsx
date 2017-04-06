@@ -4,9 +4,8 @@ import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import MongoLessonRepository from '/imports/api/lesson/MongoLessonRepository';
-import MongoAssessmentRepository
-  from '/imports/api/assessment/MongoAssessmentRepository.js';
+import AssessmentMongoCollection
+  from '/imports/api/assessment/AssessmentMongoCollection.js';
 import { LessonPlanningPage } from './LessonPlanningPage.jsx';
 import LessonContentItemType
   from '/imports/api/lessonContentItem/LessonContentItemType';
@@ -15,9 +14,6 @@ import LessonContentItemType
 import LessonMongoCollection from '/imports/api/lesson/LessonMongoCollection';
 import LessonContentItemMongoCollection
   from '/imports/api/lessonContentItem/LessonContentItemMongoCollection'
-
-var lessonRepository = new MongoLessonRepository();
-var assessmentRepository = new MongoAssessmentRepository();
 
 /**
  *
@@ -47,14 +43,13 @@ export const LessonPlanningPageContainer = createContainer(function (props) {
         }
       }
     ).fetch();
-    console.log(lessonProgramItems);
 
     return {
       lessonReady: lessonHandle.ready(),
       lesson: lesson,
       lessonProgramItemsReady: lessonProgramItemsHandle.ready(),
       lessonProgramItems: lessonProgramItems,
-      addAssessment() {
+      addNewAssessment() {
 
         // TODO change back to a method call
         Meteor.call('tools/lesson-planner/addNewItemToProgram',

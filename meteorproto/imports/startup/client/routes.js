@@ -19,8 +19,10 @@ import { CalendarPlanningDayPage }
   from '/imports/ui/pages/planning/calendar/CalendarPlanningDayPage.jsx';
 import { LessonPlanningPageContainer }
   from '/imports/ui/pages/planning/lesson/LessonPlanningPageContainer';
-import { AssessmentCreator }
-  from '/imports/ui/pages/planning/assessment-creator/AssessmentCreator.jsx';
+import { AssessmentCreatorContainer }
+  from '/imports/tools/assessment-creator/ui/AssessmentCreator';
+import LessonPlanOverview
+  from '/imports/ui/components/LessonPlanOverview.jsx';
 
 // Presentation pages
 import { PresentationRootPageContainer }
@@ -29,6 +31,11 @@ import { PresentationRootPageContainer }
 // Reporting pages
 import { ReportingRootPageContainer }
   from '/imports/ui/pages/reporting/ReportingRootPageContainer.jsx';
+
+import { ToolsRootPageContainer }
+  from '/imports/ui/pages/tools/ToolsRootPageContainer.jsx';
+import { AssessmentCreatorPage }
+  from '/imports/ui/pages/tools/AssessmentCreatorPage.jsx';
 
 /*
  Overrides for our custom styles
@@ -57,14 +64,22 @@ Meteor.startup(function () {
               <Route path="lessons/:lessonId"
                      component={LessonPlanningPageContainer} >
                 <Route path="assessment-creator/:assessmentId"
-                       component={AssessmentCreator}>
+                       component={AssessmentCreatorContainer}>
                 </Route>
+                <IndexRoute component={LessonPlanOverview} />
               </Route>
             </Route>
             <Route path="presentation"
                    component={PresentationRootPageContainer} />
             <Route path="reporting"
                    component={ReportingRootPageContainer} />
+            <Route path="tools"
+                   component={ToolsRootPageContainer}>
+              <Route path="assessment-creator"
+                     component={AssessmentCreatorPage} />
+              <Route path="assessment-creator/:assessmentId"
+                     component={AssessmentCreatorPage} />
+            </Route>
           </Route>
         </Router>
       </IntlProvider>

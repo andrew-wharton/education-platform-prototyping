@@ -4,3 +4,4 @@
 
 import './init-lessons-publication.js';
 import './init-assessments-publication.js';
+import './init-assessment-items-publication.js';

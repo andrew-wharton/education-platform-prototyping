@@ -4,5 +4,5 @@
 
 export const AssessmentItemType = Object.freeze({
   MULTIPLE_CHOICE: "MULTIPLE_CHOICE",
-  FREE_FORM_RESPONSE: "FREE_FORM_RESPONSE"
+  WRITTEN_RESPONSE: "WRITTEN_RESPONSE"
 });

@@ -3,9 +3,9 @@
 /**
  * Created by andrew on 6/2/17.
  */
-export class AssessmentItem {
+export default class AssessmentItem {
 
-  constructor() {
+  constructor(itemFilelds) {
     this.type = null;
     this.question = "";
     this.choices = [];
@@ -13,6 +13,27 @@ export class AssessmentItem {
     this.taskDescription = "";
     this.tags = [];
     this.attributes = {};
+  }
+
+  /**
+   *
+   * @returns {{}}
+   */
+  toObject() {
+    // Clone all the fields
+    return JSON.parse(
+      JSON.stringify(
+        {
+          type: this.type,
+          question: this.question,
+          choices: this.choices,
+          correctChoices: this.correctChoices,
+          taskDescription: this.taskDescription,
+          tags: this.tags,
+          attributes: this.attributes
+        }
+      )
+    );
   }
 
 }

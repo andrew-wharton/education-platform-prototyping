@@ -1,21 +1,21 @@
 "use strict";
 
-
-import { Random } from 'meteor/random'
+import { Random } from 'meteor/random';
+import { check } from 'meteor/check';
 import Lesson from '/imports/api/lesson/Lesson';
-import LessonPlannerUseCases from '/imports/tools/lesson-planner/LessonPlannerUseCases';
-import MongoLessonRepository from '/imports/api/lesson/MongoLessonRepository';
 import Assessment from '/imports/api/assessment/Assessment';
-import MongoAssessmentRepository from '/imports/api/assessment/MongoAssessmentRepository';
+import AssessmentMongoCollection
+  from '/imports/api/assessment/AssessmentMongoCollection.js';
+import LessonPlannerUseCases from './LessonPlannerUseCases';
 import LessonContentItemType
   from '/imports/api/lessonContentItem/LessonContentItemType';
 import LessonMongoCollection from '/imports/api/lesson/LessonMongoCollection';
 import LessonContentItemMongoCollection
-  from '/imports/api/lessonContentItem/LessonContentItemMongoCollection'
+  from '/imports/api/lessonContentItem/LessonContentItemMongoCollection';
 
 var lessonPlannerUseCases = new LessonPlannerUseCases({
-  lessonRepository: new MongoLessonRepository(),
-  assessmentRepository: new MongoAssessmentRepository()
+  lessonCollection: LessonMongoCollection,
+  assessmentCollection: AssessmentMongoCollection
 });
 
 /**
@@ -40,46 +40,20 @@ function logResult(err, result) {
 Meteor.methods({
 
   "lesson/create"({ startAt }) {
-    // TODO checks
-    var lesson = new Lesson();
-    lesson.startAt = new Date(startAt);
-    lessonPlannerUseCases.createLesson(lesson, logResult);
+
+    check(startAt, String);
+
+    lessonPlannerUseCases.createLesson({
+      startAt: new Date(startAt)
+    }, logResult);
   },
 
-  "tools/lesson-planner/addNewItemToProgram"(lessonId) {
+  "tools/lesson-planner/addNewItemToProgram"(lessonId, type) {
 
     console.log('addNewItemToProgram');
 
-    var assessmentId = Random.id();
+    lessonPlannerUseCases.addNewItemToProgram(lessonId)
 
-    // TODO move this to a use case
-    LessonContentItemMongoCollection.insert({
-      _id: assessmentId,
-      type: LessonContentItemType.ASSESSMENT
-    });
-
-    LessonMongoCollection.update(
-      {
-      _id: lessonId
-      },
-      {
-        $push: {
-          program: assessmentId
-        }
-      }
-    );
-
-    //check(lessonId, String);
-    //check(assessment, Object);
-
-
-    //var assessment = new Assessment();
-    //
-    //lessonPlannerUseCases.addAssessmentToLessonProgram(
-    //  lessonId,
-    //  assessment,
-    //  logResult
-    //);
   }
 
 });

@@ -21,8 +21,7 @@ export class LessonPlanningPage extends Component {
 
     return (
       <div className="lesson-planning-page">
-        <div className="lesson-plan">
-          <h2>Lesson Plan</h2>
+        <div className="lesson-plan-outline">
           <ul>
             {
               this.props.lessonProgramItems ?
@@ -33,20 +32,9 @@ export class LessonPlanningPage extends Component {
             }
           </ul>
           <div>
-            <button onClick={this.props.addAssessment}>Add Assessment</button>
+            <button onClick={this.props.addNewAssessment}>Add new assessment</button>
           </div>
         </div>
-        <section className="placeholder-content">
-          <p>Here would be the root page/view for planning lessons.</p>
-          <p>There could be interfaces for adding content to the lesson,
-            forking/cloning the lesson etc.</p>
-          <p>How the program items are linked to the lesson plan needs some
-            additional thought on how it should be modelled. Each type of
-            program item/resource would contain very different data eg. quiz, video,
-            reading assignment, discussion, slides supporting teacher's
-            lecture.</p>
-          <p>The main purpose of this page is to work with the lesson plan/program.</p>
-        </section>
         {
           this.props.children
         }
@@ -58,12 +46,11 @@ export class LessonPlanningPage extends Component {
 
     var path = LESSON_CONTENT_MAPPING[lessonProgramItem.type];
 
-    console.log(lesson);
-
     return (
-      <Link to={`/planning/lesson/${lesson._id}/${path}/${lessonProgramItem._id}`}>
+      <Link to={`/planning/lessons/${lesson._id}/${path}/${lessonProgramItem._id}`}>
         <li>
-          {lessonProgramItem._id}
+          <div>{lessonProgramItem.title}</div>
+          <div>({lessonProgramItem.type})</div>
         </li>
       </Link>
     )

@@ -1,8 +1,11 @@
 "use strict";
 
 import vasync from 'vasync';
+import Meteor from 'meteor/meteor';
+import _ from 'lodash';
 import VError from 'verror';
 import assert from 'assert-plus';
+import AssessmentItem from '/imports/api/assessment-item/AssessmentItem.js';
 
 /**
  * Responsible for implementing the application functionality required for the
@@ -11,9 +14,9 @@ import assert from 'assert-plus';
  */
 export class AssessmentCreatorUseCases {
 
-  constructor({assessmentRepository, assessmentItemRepository}) {
-    this._assessmentRepository = assessmentRepository;
-    this._assessmentItemRepository = assessmentItemRepository;
+  constructor({assessmentCollection, assessmentItemCollection}) {
+    this._assessmentCollection = assessmentCollection;
+    this._assessmentItemCollection = assessmentItemCollection;
   }
 
   /**
@@ -27,19 +30,23 @@ export class AssessmentCreatorUseCases {
       assert.object(assessment, 'assessment');
       assert.optionalFunc(callback, 'callback');
 
-      if(assessment.isValid()) {
-        this._assessmentRepository.create(assessment, function(err, assessmentId) {
-          if(err) {
-            callback(new VError(err, "AssessmentCreatorUseCases.createAssessment.create"));
-          } else {
-            callback(null, assessmentId);
-          }
-        });
-      } else {
-        setTimeout(function() {
-          callback(new Error("Assessment is not valid"));
-        }, 0);
-      }
+      var templateAssessment = {
+        title: "",
+        itemIds: [],
+        tags: [],
+        attributes: {}
+      };
+
+      _.extend(templateAssessment, assessment);
+
+      this._assessmentCollection.insert(assessment, function(err, assessmentId) {
+        if(err) {
+          callback(new VError(err, "AssessmentCreatorUseCases.createAssessment.create"));
+        } else {
+          callback(null, assessmentId);
+        }
+      });
+
     } catch(err) {
       setTimeout(function() {
         callback(new VError(err, "AssessmentCreatorUseCases.createAssessment"));
@@ -47,43 +54,64 @@ export class AssessmentCreatorUseCases {
     }
   }
 
+  /**
+   *
+   * @param assessmentId
+   * @param newValue
+   * @param callback
+   */
+  updateAssessmentTitle(assessmentId, newValue, callback) {
+    this._assessmentCollection.update(
+      {
+        _id: assessmentId
+      },
+      {
+        $set: {
+          title: newValue
+        }
+      },
+      function handleResult(err, numberOfDocsUpdated) {
+        if(err) {
+          callback(new VError(err, "AssessmentCreatorUseCases.updateAssessmentTitle"));
+        } else {
+          callback(null, numberOfDocsUpdated);
+        }
+      }
+    );
+  }
+
+  /**
+   *
+   */
   createAssessmentItem({}) {
 
   }
 
-  addNewItemToAssessment(item, assessmentId, cb) {
+  /**
+   * Adds a new assessment item to an existing assessment
+   *
+   * @param assessmentId
+   * @param item
+   * @param cb
+   */
+  addNewItemToAssessment(assessmentId, item, cb) {
 
-    var itemId;
+    var templateItem = new AssessmentItem().toObject();
 
-    // Create the item
-    vasync.waterfall([
-      function createItem(next) {
-        this._assessmentItemRepository.insert(item, next)
+    _.extend(templateItem, item);
+
+    var itemId = this._assessmentItemCollection.insert(templateItem);
+
+    this._assessmentCollection.update(
+      {
+        _id: assessmentId
       },
-      function addItemToAssessment(itemId_, next) {
-        itemId = itemId_;
-        this._assessmentRepository.update(
-          {
-            _id: assessmentId
-          },
-          {
-            $push: {
-              "items": itemId
-            }
-          }
-        );
+      {
+        $push: {
+          "itemIds": itemId
+        }
       }
-    ], function(err, res) {
-      if(err) {
-        cb(new VError(err, 'addNewItemToAssessment'));
-      } else {
-        cb(null, itemId);
-      }
-    });
-
-  }
-
-  _callbackWithError(callback, error) {
+    );
 
   }
 

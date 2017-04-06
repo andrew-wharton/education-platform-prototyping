@@ -19,7 +19,8 @@ var AssessmentItemSchema = new SimpleSchema({
     type: String
   },
   question: {
-    type: String
+    type: String,
+    defaultValue: ""
   },
   choices: {
     type: [ChoiceSchema],
@@ -34,7 +35,8 @@ var AssessmentItemSchema = new SimpleSchema({
     optional: true
   },
   tags: {
-    type: [String]
+    type: [String],
+    defaultValue: []
   },
   attributes: {
     type: Object,
@@ -55,4 +57,4 @@ Meteor.startup(function () {
   }
 });
 
-export { AssessmentItemMongoCollection }
+export default AssessmentItemMongoCollection

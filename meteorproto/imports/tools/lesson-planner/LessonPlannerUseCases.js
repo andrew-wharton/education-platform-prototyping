@@ -1,5 +1,7 @@
 "use strict";
 
+import Random from 'meteor/random';
+
 /**
  * Responsible for implementing the application functionality required for the
  * assessment creation and editing.
@@ -9,11 +11,12 @@ export default class LessonPlannerUseCases {
   /**
    *
    *
-   * @param lessonRepository - An implementation of the LessonRepository interface
+   * @param lessonCollection
+   * @param assessmentCollection
    */
-  constructor({lessonRepository, assessmentRepository}) {
-    this._lessonRepository = lessonRepository;
-    this._assessmentRepository = assessmentRepository;
+  constructor({lessonCollection, assessmentCollection}) {
+    this._lessonCollection = lessonCollection;
+    this._assessmentCollection = assessmentCollection;
   }
 
   /**
@@ -23,27 +26,46 @@ export default class LessonPlannerUseCases {
    * @param {function} callback
    */
   createLesson(lesson, callback) {
-    this._lessonRepository.create(lesson, callback);
+
+    var lessonTemplate = {
+      startAt: new Date(),
+      endAt: null,
+      program: []
+    };
+
+    _.extend(lessonTemplate, lesson);
+
+    this._lessonCollection.insert(lessonTemplate, callback);
   }
 
   /**
    * Pushes an Assessment to the lesson program
    *
    * @param {string} lessonId
-   * @param {Assessment} assessment
+   * @param {string} type
    * @param callback
    */
-  addAssessmentToLessonProgram(lessonId, assessment, callback) {
+  addNewItemToProgram(lessonId, {type}, callback) {
 
-    var self = this;
+    var assessmentId = Random.id();
 
-    // Create the new Assessment
-    this._assessmentRepository.create(assessment, function(err, assessmentId) {
-      // Then add it to the lesson in the lessonRepository
-      console.log(lessonId);
-      console.log(assessmentId);
-      self._lessonRepository.addItemToProgram(lessonId, assessmentId, callback);
+    // Create the content item
+    LessonContentItemMongoCollection.insert({
+      _id: assessmentId,
+      type: type
     });
+
+    // Add the
+    LessonMongoCollection.update(
+      {
+        _id: lessonId
+      },
+      {
+        $push: {
+          program: assessmentId
+        }
+      }
+    );
 
 
   }

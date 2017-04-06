@@ -1,16 +1,17 @@
 "use strict";
 
+import { check } from 'meteor/check';
 import Assessment from '/imports/api/assessment/Assessment.js';
-import MongoAssessmentRepository
-  from '/imports/api/assessment/MongoAssessmentRepository';
-import { MongoAssessmentItemRepository }
-  from '/imports/api/assessment-item/MongoAssessmentItemRepository.js';
+import AssessmentMongoCollection
+  from '/imports/api/assessment/AssessmentMongoCollection.js';
+import AssessmentItemMongoCollection
+  from '/imports/api/assessment-item/AssessmentItemMongoCollection.js';
 import { AssessmentCreatorUseCases } from './AssessmentCreatorUseCases.js';
 
 // Wire up the use cases with it's repository implementation
 const useCases = new AssessmentCreatorUseCases({
-  assessmentRepository: new MongoAssessmentRepository(),
-  assessmentItemRepository: new MongoAssessmentItemRepository()
+  assessmentCollection: AssessmentMongoCollection,
+  assessmentItemCollection: AssessmentItemMongoCollection
 });
 
 /**
@@ -18,24 +19,45 @@ const useCases = new AssessmentCreatorUseCases({
  */
 Meteor.methods({
 
-  "tools/assessment-creator/createAssessment"(opts) {
+  "tools/assessment-creator/createAssessment"({title}) {
 
-    var assessment = new Assessment();
+    check(title, String);
 
-    if(opts && opts.title) {
-      assessment.title = opts.title;
-    }
+    // TODO added itemIds, tags and attributes
 
-    // TODO added items, tags and attributes
+    useCases.createAssessment(
+      {
+        title: title ? title : ""
+      },
+      function(err, assessmentId) {
+        if(err) {
+          console.error(err);
+        } else {
+          console.log(assessmentId);
+        }
+      }
+    );
+  },
 
+  "tools/assessment-creator/updateAssessmentTitle"(assessmentId, newValue) {
+    // TODO check args
+    useCases.updateAssessmentTitle(assessmentId, newValue);
+  },
 
-    useCases.createAssessment(assessment, function(err, assessmentId) {
+  "tools/assessment-creator/addNewItemToAssessment"(assessmentId, item) {
+
+    check(assessmentId, String);
+    check(item, Object);
+
+    useCases.addNewItemToAssessment(assessmentId, item, function(err) {
       if(err) {
         console.error(err);
-      } else {
-        console.log(assessmentId);
       }
     });
+  },
+
+  "tools/assessment-creator/addExistingItemToAssessment"(assessmentId, assessmentItemId) {
+    //useCases.addNewItemToAssessment()
   }
 
 });
