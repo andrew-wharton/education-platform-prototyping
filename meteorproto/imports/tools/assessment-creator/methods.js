@@ -58,6 +58,21 @@ Meteor.methods({
 
   "tools/assessment-creator/addExistingItemToAssessment"(assessmentId, assessmentItemId) {
     //useCases.addNewItemToAssessment()
+  },
+
+  /**
+   *
+   */
+  "tools/assessment-creator/updateAssessmentItemQuestion"(assessmentItemId, value) {
+
+    check(assessmentItemId, String);
+    check(value, String);
+
+    useCases.updateAssessmentItemQuestion(assessmentItemId, value, function(err) {
+      if(err) {
+        console.error(err);
+      }
+    });
   }
 
 });

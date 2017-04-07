@@ -115,4 +115,22 @@ export class AssessmentCreatorUseCases {
 
   }
 
+  /**
+   *
+   * @param assessmentItemId
+   * @param value
+   */
+  updateAssessmentItemQuestion(assessmentItemId, value) {
+    this._assessmentItemCollection.update(
+      {
+        _id: assessmentItemId
+      },
+      {
+        $set: {
+          question: value
+        }
+      }
+    );
+  }
+
 }

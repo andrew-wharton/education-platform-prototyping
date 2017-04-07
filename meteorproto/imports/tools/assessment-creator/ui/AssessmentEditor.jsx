@@ -64,8 +64,12 @@ const AssessmentEditor = React.createClass({
           </div>
         </div>
         <div className="details">
-          <AssessmentItemEditorContainer
-            itemId={this.state.selectedItemId} />
+          {
+            this.state.selectedItemId ?
+              <AssessmentItemEditorContainer
+                itemId={this.state.selectedItemId} /> :
+              null
+          }
         </div>
       </div>
     );
@@ -84,8 +88,9 @@ const AssessmentEditor = React.createClass({
   },
 
   selectItemId(itemId) {
+    console.log("Hello Zoe");
     this.setState({
-      selectItemId: itemId
+      selectedItemId: itemId
     })
   },
 
