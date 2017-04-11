@@ -75,6 +75,21 @@ Meteor.methods({
     });
   },
 
+  "tools/assessment-creator/addChoiceToAssessmentItem"(assessmentItemId, choice) {
+
+    check(assessmentItemId, String);
+    check(choice, Object);
+    check(choice.answer, String);
+    check(choice.isCorrect, Boolean);
+
+    useCases.addChoiceToAssessmentItem(assessmentItemId, choice, function(err) {
+      if(err) {
+        console.error(err);
+      }
+    });
+
+  },
+
   "tools/assessment-creator/updateAssessmentItemChoiceAnswer"(context, answer) {
 
     check(context, Object);

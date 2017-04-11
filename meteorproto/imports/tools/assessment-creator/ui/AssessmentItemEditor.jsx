@@ -24,10 +24,8 @@ const AssessmentItemEditor = React.createClass({
   getInitialState() {
     return {
       question: this.props.assessmentItem.question,
-      choiceToAdd: {
-        answer: "",
-        isCorrect: false
-      }
+      toAdd_answer: "",
+      toAdd_isCorrect: false
     }
   },
 
@@ -93,45 +91,16 @@ const AssessmentItemEditor = React.createClass({
         <div>Add a choice</div>
         <input
           type="checkbox"
-          checked={this.state.choiceToAdd.isCorrect}
-          onBlur={this.handleAddChoiceBlur.bind(this, 'isCorrect')} />
+          checked={this.state.toAdd_isCorrect}
+          onChange={this.handleToAddIsCorrectChange} />
         <input
-          value={this.state.choiceToAdd.answer}
-          onChange={this.handleQuestionChange}
-          onBlur={this.handleAddChoiceBlur.bind(this, 'answer')} />
+          value={this.state.toAdd_answer}
+          onChange={this.handleToAddAnswerChange} />
         <button
           onClick={this.addChoice}>Add choice</button>
       </div>
     );
   },
-
-
-
-  handleAddChoiceBlur(field, event) {
-
-  },
-
-  addChoice() {
-
-    var self = this;
-
-    this.props.addChoice(this.state.choiceToAdd, function(err) {
-      if(err) {
-        console.error(err);
-      } else {
-        self.setState({
-          choiceToAdd: {
-            answer: "",
-            isCorrect: false
-          }
-        });
-      }
-
-    })
-
-  },
-
-
 
   handleQuestionChange(event) {
     this.setState({
@@ -141,6 +110,39 @@ const AssessmentItemEditor = React.createClass({
 
   handleQuestionBlur() {
     this.props.updateAssessmentItemQuestion(this.state.question)
+  },
+
+  handleToAddIsCorrectChange(event) {
+    this.setState({
+      toAdd_isCorrect: event.target.checked
+    })
+  },
+
+  handleToAddAnswerChange(event) {
+    this.setState({
+      toAdd_answer: event.target.value
+    })
+  },
+
+  addChoice() {
+
+    var self = this;
+    var choiceToAdd = {
+      answer: this.state.toAdd_answer,
+      isCorrect: this.state.toAdd_isCorrect
+    };
+
+    this.props.addChoice(choiceToAdd, function(err) {
+      if(err) {
+        console.error(err);
+      } else {
+        self.setState({
+          toAdd_answer: "",
+          toAdd_isCorrect: false
+        });
+      }
+    })
+
   }
 
 });
@@ -152,13 +154,22 @@ export const AssessmentItemEditorContainer = createContainer(function (props) {
 
   return {
     assessmentItem: AssessmentItemMongoCollection.findOne({
-      _id: props.itemId
+      _id: props.assessmentItemId
     }),
-    updateAssessmentItemQuestion(newValue) {
+    updateAssessmentItemQuestion(newValue, callback) {
       Meteor.call(
         "tools/assessment-creator/updateAssessmentItemQuestion",
-        props.itemId,
-        newValue
+        props.assessmentItemId,
+        newValue,
+        callback
+      )
+    },
+    addChoice(choice, callback) {
+      Meteor.call(
+        "tools/assessment-creator/addChoiceToAssessmentItem",
+        props.assessmentItemId,
+        choice,
+        callback
       )
     }
   };

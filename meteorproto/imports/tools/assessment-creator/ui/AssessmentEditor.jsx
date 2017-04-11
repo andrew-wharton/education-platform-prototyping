@@ -68,7 +68,7 @@ const AssessmentEditor = React.createClass({
             this.state.selectedItemId ?
               <AssessmentItemEditorContainer
                 assessmentItemsReady={this.props.assessmentItemsReady}
-                itemId={this.state.selectedItemId} /> :
+                assessmentItemId={this.state.selectedItemId} /> :
               null
           }
         </div>
@@ -76,21 +76,21 @@ const AssessmentEditor = React.createClass({
     );
   },
 
-  renderAssessmentItem(itemId) {
+  renderAssessmentItem(assessmentItemId) {
     return (
       <div
         className="assessment-item-viewer-wrapper"
-        onClick={this.selectItemId.bind(this, itemId)} >
+        onClick={this.selectAssessmentItemId.bind(this, assessmentItemId)} >
         <AssessmentItemViewerContainer
-          itemId={itemId}
-          key={itemId} />
+          itemId={assessmentItemId}
+          key={assessmentItemId} />
       </div>
     );
   },
 
-  selectItemId(itemId) {
+  selectAssessmentItemId(assessmentItemId) {
     this.setState({
-      selectedItemId: itemId
+      selectedItemId: assessmentItemId
     })
   },
 

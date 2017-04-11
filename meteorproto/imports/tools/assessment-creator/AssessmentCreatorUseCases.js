@@ -1,11 +1,13 @@
 "use strict";
 
-import vasync from 'vasync';
-import Meteor from 'meteor/meteor';
 import _ from 'lodash';
+import vasync from 'vasync';
 import VError from 'verror';
 import assert from 'assert-plus';
+import { Random } from 'meteor/random';
 import AssessmentItem from '/imports/api/assessment-item/AssessmentItem.js';
+import { AssessmentItemType }
+  from '/imports/api/assessment-item/AssessmentItemType.js';
 
 /**
  * Responsible for implementing the application functionality required for the
@@ -81,13 +83,6 @@ export class AssessmentCreatorUseCases {
   }
 
   /**
-   *
-   */
-  createAssessmentItem({}) {
-
-  }
-
-  /**
    * Adds a new assessment item to an existing assessment
    *
    * @param assessmentId
@@ -128,6 +123,29 @@ export class AssessmentCreatorUseCases {
       {
         $set: {
           question: value
+        }
+      }
+    );
+  }
+
+  /**
+   *
+   * @param assessmentItemId
+   * @param choice
+   */
+  addChoiceToAssessmentItem(assessmentItemId, choice) {
+
+    choice.identifier = Random.id();
+
+    this._assessmentItemCollection.update(
+      {
+        _id: assessmentItemId,
+        // Choices can only be added to multi choice questions
+        type: AssessmentItemType.MULTIPLE_CHOICE
+      },
+      {
+        $push: {
+          'choices': choice
         }
       }
     );
