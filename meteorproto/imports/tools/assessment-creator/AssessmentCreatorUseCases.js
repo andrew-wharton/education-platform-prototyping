@@ -133,4 +133,35 @@ export class AssessmentCreatorUseCases {
     );
   }
 
+  /**
+   *
+   */
+  updateAssessmentItemChoiceAnswer(context, answer) {
+    this._assessmentItemCollection.update(
+      {
+        _id: context.assessmentItemId,
+        'choices.identifier': context.choiceIdentifier
+      },
+      {
+        $set: {
+          'choices.$.answer': answer
+        }
+      }
+    );
+  }
+
+  updateAssessmentItemChoiceIsCorrect(context, isCorrect) {
+    this._assessmentItemCollection.update(
+      {
+        _id: context.assessmentItemId,
+        'choices.identifier': context.choiceIdentifier
+      },
+      {
+        $set: {
+          'choices.$.isCorrect': isCorrect
+        }
+      }
+    );
+  }
+
 }

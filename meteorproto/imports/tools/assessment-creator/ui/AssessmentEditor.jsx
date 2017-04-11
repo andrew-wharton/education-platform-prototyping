@@ -67,6 +67,7 @@ const AssessmentEditor = React.createClass({
           {
             this.state.selectedItemId ?
               <AssessmentItemEditorContainer
+                assessmentItemsReady={this.props.assessmentItemsReady}
                 itemId={this.state.selectedItemId} /> :
               null
           }
@@ -88,7 +89,6 @@ const AssessmentEditor = React.createClass({
   },
 
   selectItemId(itemId) {
-    console.log("Hello Zoe");
     this.setState({
       selectedItemId: itemId
     })

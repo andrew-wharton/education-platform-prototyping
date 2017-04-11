@@ -5,11 +5,14 @@
 SimpleSchema.debug = true;
 
 var ChoiceSchema = new SimpleSchema({
-  choiceId: {
+  identifier: {
     type: String
   },
   answer: {
     type: String
+  },
+  isCorrect: {
+    type: Boolean
   }
 });
 
@@ -24,10 +27,6 @@ var AssessmentItemSchema = new SimpleSchema({
   },
   choices: {
     type: [ChoiceSchema],
-    optional: true
-  },
-  correctChoices: {
-    type: [String],
     optional: true
   },
   taskDescription: {

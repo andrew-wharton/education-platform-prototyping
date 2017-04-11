@@ -73,6 +73,36 @@ Meteor.methods({
         console.error(err);
       }
     });
+  },
+
+  "tools/assessment-creator/updateAssessmentItemChoiceAnswer"(context, answer) {
+
+    check(context, Object);
+    check(context.assessmentItemId, String);
+    check(context.choiceIdentifier, String);
+    check(answer, String);
+
+    useCases.updateAssessmentItemChoiceAnswer(context, answer, function(err) {
+      if(err) {
+        console.error(err);
+      }
+    });
+
+  },
+
+  "tools/assessment-creator/updateAssessmentItemChoiceIsCorrect"(context, isCorrect) {
+
+    check(context, Object);
+    check(context.assessmentItemId, String);
+    check(context.choiceIdentifier, String);
+    check(isCorrect, Boolean);
+
+    useCases.updateAssessmentItemChoiceIsCorrect(context, isCorrect, function(err) {
+      if(err) {
+        console.error(err);
+      }
+    });
+
   }
 
 });
