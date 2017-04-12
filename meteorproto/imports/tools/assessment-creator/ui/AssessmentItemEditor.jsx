@@ -80,6 +80,7 @@ const AssessmentItemEditor = React.createClass({
   renderChoice(choice) {
     return (
       <AssessmentItemChoiceContainer
+        key={choice.identifier}
         assessmentItemId={this.props.assessmentItem._id}
         choice={choice} />
     );
