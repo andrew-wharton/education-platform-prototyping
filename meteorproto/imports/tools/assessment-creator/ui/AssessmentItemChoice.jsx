@@ -13,6 +13,7 @@ const AssessmentItemChoice = React.createClass({
 
   getInitialState() {
     return {
+      isRemoved: false,
       isCorrect: this.props.choice.isCorrect,
       answer: this.props.choice.answer
     };
@@ -21,14 +22,21 @@ const AssessmentItemChoice = React.createClass({
   render() {
     return (
       <div className="AssessmentItemChoice">
-        <input
-          type="checkbox"
-          checked={this.state.isCorrect}
-          onChange={this.handleIsCorrectChange} />
-        <input
-          value={this.state.answer}
-          onChange={this.handleAnswerChange}
-          onBlur={this.handleAnswerBlur} />
+        {
+          !this.state.isRemoved ?
+            <div>
+              <input
+                type="checkbox"
+                checked={this.state.isCorrect}
+                onChange={this.handleIsCorrectChange} />
+              <input
+                value={this.state.answer}
+                onChange={this.handleAnswerChange}
+                onBlur={this.handleAnswerBlur} />
+              <button onClick={this.remove}>Delete</button>
+            </div> :
+            null
+        }
       </div>
     );
   },
@@ -48,6 +56,13 @@ const AssessmentItemChoice = React.createClass({
 
   handleAnswerBlur(event) {
     this.props.updateAnswer(this.state.answer);
+  },
+
+  remove(event) {
+    this.setState({
+      isRemoved: true
+    });
+    this.props.remove()
   }
 
 });
@@ -56,6 +71,9 @@ const AssessmentItemChoice = React.createClass({
  *
  */
 export const AssessmentItemChoiceContainer = createContainer(function (props) {
+
+  mod_assert.string(props.assessmentItemId, 'props.assessmentItemId');
+  mod_assert.object(props.choice, 'props.choice');
 
   return {
     updateIsCorrect(isCorrect, callback) {
@@ -85,6 +103,17 @@ export const AssessmentItemChoiceContainer = createContainer(function (props) {
           choiceIdentifier: props.choice.identifier
         },
         newValue,
+        callback
+      )
+    },
+    remove(callback) {
+
+      Meteor.call(
+        "tools/assessment-creator/removeAssessmentItemChoiceAnswer",
+        {
+          assessmentItemId: props.assessmentItemId,
+          choiceIdentifier: props.choice.identifier
+        },
         callback
       )
     }

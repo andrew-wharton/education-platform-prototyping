@@ -182,4 +182,19 @@ export class AssessmentCreatorUseCases {
     );
   }
 
+  removeAssessmentItemChoiceAnswer(context) {
+    this._assessmentItemCollection.update(
+      {
+        _id: context.assessmentItemId
+      },
+      {
+        $pull: {
+          'choices': {
+            identifier: context.choiceIdentifier
+          }
+        }
+      }
+    );
+  }
+
 }

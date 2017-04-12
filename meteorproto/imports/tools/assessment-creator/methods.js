@@ -49,8 +49,8 @@ Meteor.methods({
     check(assessmentId, String);
     check(item, Object);
 
-    useCases.addNewItemToAssessment(assessmentId, item, function(err) {
-      if(err) {
+    useCases.addNewItemToAssessment(assessmentId, item, function (err) {
+      if (err) {
         console.error(err);
       }
     });
@@ -63,13 +63,13 @@ Meteor.methods({
   /**
    *
    */
-  "tools/assessment-creator/updateAssessmentItemQuestion"(assessmentItemId, value) {
+    "tools/assessment-creator/updateAssessmentItemQuestion"(assessmentItemId, value) {
 
     check(assessmentItemId, String);
     check(value, String);
 
-    useCases.updateAssessmentItemQuestion(assessmentItemId, value, function(err) {
-      if(err) {
+    useCases.updateAssessmentItemQuestion(assessmentItemId, value, function (err) {
+      if (err) {
         console.error(err);
       }
     });
@@ -82,8 +82,8 @@ Meteor.methods({
     check(choice.answer, String);
     check(choice.isCorrect, Boolean);
 
-    useCases.addChoiceToAssessmentItem(assessmentItemId, choice, function(err) {
-      if(err) {
+    useCases.addChoiceToAssessmentItem(assessmentItemId, choice, function (err) {
+      if (err) {
         console.error(err);
       }
     });
@@ -97,8 +97,8 @@ Meteor.methods({
     check(context.choiceIdentifier, String);
     check(answer, String);
 
-    useCases.updateAssessmentItemChoiceAnswer(context, answer, function(err) {
-      if(err) {
+    useCases.updateAssessmentItemChoiceAnswer(context, answer, function (err) {
+      if (err) {
         console.error(err);
       }
     });
@@ -112,7 +112,20 @@ Meteor.methods({
     check(context.choiceIdentifier, String);
     check(isCorrect, Boolean);
 
-    useCases.updateAssessmentItemChoiceIsCorrect(context, isCorrect, function(err) {
+    useCases.updateAssessmentItemChoiceIsCorrect(context, isCorrect, function (err) {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+  },
+
+  "tools/assessment-creator/removeAssessmentItemChoiceAnswer"(context) {
+    check(context, Object);
+    check(context.assessmentItemId, String);
+    check(context.choiceIdentifier, String);
+
+    useCases.removeAssessmentItemChoiceAnswer(context, function (err) {
       if(err) {
         console.error(err);
       }
