@@ -3,6 +3,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
+import { TextField } from 'material-ui';
 import { AssessmentItemType }
   from '/imports/api/assessment-item/AssessmentItemType.js';
 import { AssessmentItemViewerContainer } from './AssessmentItemViewer.jsx';
@@ -34,12 +35,12 @@ const AssessmentEditor = React.createClass({
       <div className="AssessmentEditor">
         <div className="outline">
           <div className="assessment-fields">
-            <label>Title:</label>
-            <input
-              type="text"
+            <TextField
+              floatingLabelText="Assessment Title"
               value={this.state.title}
               onChange={this.updateTitleState}
-              onBlur={this.updateTitle} />
+              onBlur={this.updateTitle}
+              fullWidth={true} />
           </div>
           <div className="assessment-items">
             {
@@ -76,12 +77,14 @@ const AssessmentEditor = React.createClass({
     );
   },
 
-  renderAssessmentItem(assessmentItemId) {
+  renderAssessmentItem(assessmentItemId, index) {
     return (
       <div
         className="assessment-item-viewer-wrapper"
         onClick={this.selectAssessmentItemId.bind(this, assessmentItemId)} >
         <AssessmentItemViewerContainer
+          index={index}
+          isSelected={this.state.selectedItemId === assessmentItemId}
           itemId={assessmentItemId}
           key={assessmentItemId} />
       </div>

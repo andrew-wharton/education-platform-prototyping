@@ -4,6 +4,7 @@ import mod_assert from 'assert-plus';
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
+import { TextField, Checkbox } from 'material-ui';
 import './AssessmentItemChoice.less';
 
 /**
@@ -24,16 +25,21 @@ const AssessmentItemChoice = React.createClass({
       <div className="AssessmentItemChoice">
         {
           !this.state.isRemoved ?
-            <div>
-              <input
-                type="checkbox"
-                checked={this.state.isCorrect}
-                onChange={this.handleIsCorrectChange} />
-              <input
-                value={this.state.answer}
-                onChange={this.handleAnswerChange}
-                onBlur={this.handleAnswerBlur} />
-              <button onClick={this.remove}>Delete</button>
+            <div className="fields">
+              <div className="field is-correct">
+                <Checkbox
+                  checked={this.state.isCorrect}
+                  onCheck={this.handleIsCorrectChange} />
+              </div>
+              <div className="field answer">
+                <TextField
+                  value={this.state.answer}
+                  onChange={this.handleAnswerChange}
+                  onBlur={this.handleAnswerBlur} />
+              </div>
+              <div className="field delete">
+                <button onClick={this.remove}>Delete</button>
+              </div>
             </div> :
             null
         }
@@ -41,11 +47,11 @@ const AssessmentItemChoice = React.createClass({
     );
   },
 
-  handleIsCorrectChange(event) {
+  handleIsCorrectChange(event, isChecked) {
     this.setState({
-      isCorrect: event.target.checked
+      isCorrect: isChecked
     });
-    this.props.updateIsCorrect(event.target.checked);
+    this.props.updateIsCorrect(isChecked);
   },
 
   handleAnswerChange(event) {

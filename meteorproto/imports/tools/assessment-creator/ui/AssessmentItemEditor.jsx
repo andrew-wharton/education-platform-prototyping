@@ -3,6 +3,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
+import { TextField, Checkbox } from 'material-ui';
 import { AssessmentItemType }
   from '/imports/api/assessment-item/AssessmentItemType.js'
 import AssessmentItemMongoCollection
@@ -51,19 +52,18 @@ const AssessmentItemEditor = React.createClass({
       <div>
         {
           item.type === AssessmentItemType.MULTIPLE_CHOICE ?
-            <label className="question">
-              Question:
-              <input
-                value={this.state.question}
-                onChange={this.handleQuestionChange}
-                onBlur={this.handleQuestionBlur} />
-            </label> :
+            <TextField
+              floatingLabelText="Question"
+              value={this.state.question}
+              onChange={this.handleQuestionChange}
+              onBlur={this.handleQuestionBlur}
+              fullWidth={true}
+              multiLine={true} /> :
             null
         }
         {
           item.type === AssessmentItemType.MULTIPLE_CHOICE ?
             <div className="choices">
-              <div>Choices</div>
               {
                 item.choices.map(this.renderChoice)
               }
@@ -88,17 +88,21 @@ const AssessmentItemEditor = React.createClass({
 
   renderAddChoice() {
     return (
-      <div>
-        <div>Add a choice</div>
-        <input
-          type="checkbox"
-          checked={this.state.toAdd_isCorrect}
-          onChange={this.handleToAddIsCorrectChange} />
-        <input
-          value={this.state.toAdd_answer}
-          onChange={this.handleToAddAnswerChange} />
-        <button
-          onClick={this.addChoice}>Add choice</button>
+      <div className="add-choice">
+        <div className="field is-correct">
+          <Checkbox
+            checked={this.state.toAdd_isCorrect}
+            onCheck={this.handleToAddIsCorrectChange} />
+        </div>
+        <div className="field">
+          <TextField
+            value={this.state.toAdd_answer}
+            onChange={this.handleToAddAnswerChange} />
+        </div>
+        <div className="field add">
+          <button
+            onClick={this.addChoice}>Add</button>
+        </div>
       </div>
     );
   },
@@ -113,9 +117,9 @@ const AssessmentItemEditor = React.createClass({
     this.props.updateAssessmentItemQuestion(this.state.question)
   },
 
-  handleToAddIsCorrectChange(event) {
+  handleToAddIsCorrectChange(event, isChecked) {
     this.setState({
-      toAdd_isCorrect: event.target.checked
+      toAdd_isCorrect: isChecked
     })
   },
 

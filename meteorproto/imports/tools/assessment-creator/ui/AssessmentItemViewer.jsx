@@ -11,19 +11,23 @@ import './AssessmentItemViewer.less';
 
 const RENDERERS = {};
 
-RENDERERS[AssessmentItemType.MULTIPLE_CHOICE] = function(assessmentItem) {
+RENDERERS[AssessmentItemType.MULTIPLE_CHOICE] = function(assessmentItem, index) {
   return (
     <div className="multiple-choice">
       <div className="question">
         {
           assessmentItem.question ?
-            assessmentItem.question :
-            'No question'
+          `${index + 1}. ` + assessmentItem.question :
+            `${index + 1}. ` + 'No question'
         }
       </div>
       <ol>
         {
-          assessmentItem.choices.map(renderChoice)
+          assessmentItem.choices.length > 0 ?
+            assessmentItem.choices.map(renderChoice) :
+            <li className="choice">
+              (no answers)
+            </li>
         }
       </ol>
     </div>
@@ -63,15 +67,12 @@ RENDERERS[AssessmentItemType.MULTIPLE_CHOICE] = function(assessmentItem) {
 const AssessmentItemViewer = React.createClass({
 
   render() {
-    if(this.props.assessmentItem) {
-      console.log(RENDERERS)
-    }
-
     return (
-      <div className="AssessmentItemViewer">
+      <div className={`AssessmentItemViewer ${this.props.isSelected ? 'is-selected': ''}`}>
         {
           this.props.assessmentItem ?
-            RENDERERS[this.props.assessmentItem.type](this.props.assessmentItem) :
+            RENDERERS[this.props.assessmentItem.type](
+              this.props.assessmentItem, this.props.index) :
             "Loading..."
         }
       </div>

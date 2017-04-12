@@ -43,7 +43,7 @@ import { AssessmentCreatorPage }
 const muiTheme = getMuiTheme({
   fontFamily: 'sans-serif',
   palette: {
-    primary1Color: "#d4622a"
+    primary1Color: "#4463b3"
   }
 });
 
