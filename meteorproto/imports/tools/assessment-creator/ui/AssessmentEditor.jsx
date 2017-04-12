@@ -60,12 +60,6 @@ const AssessmentEditor = React.createClass({
                   Add Multi Choice Question
                 </button>
               </li>
-              <li>
-                <button
-                  onClick={this.addItem.bind(this, AssessmentItemType.WRITTEN_RESPONSE)}>
-                  Add Written Response Question
-                </button>
-              </li>
             </ul>
           </div>
         </div>
