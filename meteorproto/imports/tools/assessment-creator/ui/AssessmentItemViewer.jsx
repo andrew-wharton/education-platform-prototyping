@@ -21,8 +21,40 @@ RENDERERS[AssessmentItemType.MULTIPLE_CHOICE] = function(assessmentItem) {
             'No question'
         }
       </div>
+      <ol>
+        {
+          assessmentItem.choices.map(renderChoice)
+        }
+      </ol>
     </div>
   );
+
+  /**
+   *
+   */
+  function renderChoice(choice) {
+    return (
+      <li
+        key={choice.identifier}
+        className="choice">
+        {
+          choice.isCorrect ?
+            <img
+              className="is-correct"
+              src="/images/glyphicons-153-check.png" /> :
+            <img
+              className="is-correct"
+              src="/images/glyphicons-154-unchecked.png" />
+        }
+        <span>
+          {
+            choice.answer
+          }
+        </span>
+      </li>
+    )
+  }
+
 };
 
 /**
