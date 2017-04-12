@@ -15,6 +15,12 @@ import './AssessmentEditor.less';
  */
 const AssessmentEditor = React.createClass({
 
+  componentWillReceiveProps(props) {
+    this.setState({
+      title: props.assessment ? props.assessment.title : ""
+    })
+  },
+
   getInitialState() {
     return {
       title: this.props.assessment.title,
@@ -86,6 +92,20 @@ const AssessmentEditor = React.createClass({
           key={assessmentItemId} />
       </div>
     );
+  },
+
+  updateTitleState(event) {
+    this.setState({
+      title: event.target.value
+    })
+  },
+
+  updateTitle() {
+    Meteor.call(
+      "tools/assessment-creator/updateAssessmentTitle",
+      this.props.assessment._id,
+      this.state.title
+    )
   },
 
   selectAssessmentItemId(assessmentItemId) {

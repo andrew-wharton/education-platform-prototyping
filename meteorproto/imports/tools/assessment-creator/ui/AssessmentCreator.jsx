@@ -19,18 +19,6 @@ export const AssessmentCreator = React.createClass({
     lessonId: React.PropTypes.string
   },
 
-  componentWillReceiveProps(props) {
-    this.setState({
-      title: props.assessment ? props.assessment.title : ""
-    })
-  },
-
-  getInitialState() {
-    return {
-      title: ""
-    }
-  },
-
   render() {
 
     return (
@@ -69,17 +57,6 @@ export const AssessmentCreator = React.createClass({
       <AssessmentEditorContainer
         assessment={this.props.assessment} />
     )
-  },
-
-  updateTitleState(event) {
-    this.setState({
-      title: event.target.value
-    })
-  },
-
-  updateTitle() {
-    Meteor.call("tools/assessment-creator/updateAssessmentTitle",
-      this.props.assessmentId, this.state.title)
   }
 
 });
@@ -88,8 +65,6 @@ export const AssessmentCreator = React.createClass({
  *
  */
 export const AssessmentCreatorContainer = createContainer(function (props) {
-
-  console.log(props);
 
   Meteor.subscribe('assessments', {});
 
