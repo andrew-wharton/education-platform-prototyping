@@ -13,6 +13,7 @@ export default class AssessmentItem {
     this.taskDescription = "";
     this.tags = [];
     this.attributes = {};
+    this.ownerId = "";
   }
 
   /**

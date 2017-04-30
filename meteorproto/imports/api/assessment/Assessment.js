@@ -11,6 +11,7 @@ export default class Assessment {
     this.itemIds = [];
     this.tags = [];
     this.attributes = {};
+    this.ownerId = "";
   }
 
   isValid() {

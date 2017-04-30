@@ -17,6 +17,9 @@ var AssessmentSchema = new SimpleSchema({
   attributes: {
     type: Object,
     blackbox: true
+  },
+  ownerId: {
+    type: String
   }
 });
 
