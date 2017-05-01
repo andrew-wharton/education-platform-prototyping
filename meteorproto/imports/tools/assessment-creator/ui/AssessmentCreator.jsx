@@ -22,7 +22,7 @@ export const AssessmentCreator = React.createClass({
   render() {
 
     return (
-      <div className="tool-assessment-creator">
+      <div className="AssessmentCreator">
         {
           !this.props.assessment ?
             this.renderListing() :
@@ -37,6 +37,9 @@ export const AssessmentCreator = React.createClass({
     return (
       <div>
         <h2>Assessments</h2>
+        <div className="create-assessment">
+          <button onClick={this.createNewAssessment}>New Assessment</button>
+        </div>
         {
           this.props.assessments.map(this.renderAssessmentLink)
         }
@@ -46,8 +49,17 @@ export const AssessmentCreator = React.createClass({
 
   renderAssessmentLink(assessment) {
     return (
-      <div>
-        <Link to={this.props.path + '/' + assessment._id}>{assessment.title} <br />(assessment._id)</Link>
+      <div className="assessment-link">
+        <Link to={this.props.path + '/' + assessment._id}>
+          {
+            assessment.title && assessment.title.length > 0 ?
+              assessment.title :
+              <span className="no-title">(No title)</span>
+          }
+        </Link>
+        <button onClick={this.createNewVersion.bind(this, assessment._id)}>
+          Create New Version
+        </button>
       </div>
     );
   },
@@ -57,6 +69,14 @@ export const AssessmentCreator = React.createClass({
       <AssessmentEditorContainer
         assessment={this.props.assessment} />
     )
+  },
+
+  createNewAssessment(event) {
+    Meteor.call("tools/assessment-creator/createAssessment")
+  },
+
+  createNewVersion(assessmentId, event) {
+    Meteor.call("tools/assessment-creator/deepCloneAssessment", assessmentId)
   }
 
 });

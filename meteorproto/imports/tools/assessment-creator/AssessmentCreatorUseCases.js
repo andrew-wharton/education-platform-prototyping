@@ -57,6 +57,92 @@ export class AssessmentCreatorUseCases {
   }
 
   /**
+   * Creates a copy of the Assessment and all it's AssessmentItems, setting the
+   *
+   *
+   * @param {object} args
+   * @param {string} args.assessmentId
+   * @param {string} args.ownerId
+   * @param callback
+   */
+  deepCloneAssessment({assessmentId, ownerId}, callback) {
+    try {
+
+      assert.string(assessmentId, 'assessmentId');
+      assert.string(ownerId, 'ownerId');
+      assert.optionalFunc(callback, 'callback');
+
+      var assessmentToClone = this._assessmentCollection.findOne(assessmentId);
+
+      if(assessmentToClone) {
+
+        var clonedItemIds = [];
+
+        vasync.waterfall([
+          function cloneAssessmentItems(next) {
+
+            var assessmentItems = this._assessmentItemCollection.find({
+              id: {
+                $in: assessmentToClone.itemsIds
+              }
+            }).fetch();
+
+            assessmentItems.forEach(function(it) {
+              it.parentId = it._id;
+              it._id = Random.id();
+              clonedItemIds.push(it._id);
+            });
+
+            this._assessmentItemCollection.rawCollection().insert(
+              assessmentItems,
+              {
+                removeEmptyStrings: false
+              },
+              next
+            );
+          },
+          function cloneAssessment(numberOfDocsInserted, next) {
+
+            // Add a 'link' back to the assessment from which it was cloned
+            assessmentToClone.parentId = assessmentToClone._id;
+            assessmentToClone._id = Random.id();
+            assessmentToClone.itemIds = clonedItemIds;
+            assessmentToClone.ownerId = ownerId;
+
+            this._assessmentCollection.insert(
+              assessmentToClone,
+              function handleResult(err, clonedAssessmentId) {
+                if(err) {
+                  callback(new VError(err, 'cloneAssessment->handleResult'));
+                } else {
+                  callback(null, clonedAssessmentId);
+                }
+              }
+            );
+          }
+        ], function handleWaterfallResult(err, result) {
+          if(err) {
+            callback(
+              new VError(err, "AssessmentCreatorUseCases.deepCloneAssessment" +
+                "->handleWaterfallResult")
+            );
+          } else {
+            callback(null, result)
+          }
+        });
+
+      } else {
+        callback(new VError(err, "AssessmentCreatorUseCases.deepCloneAssessment"))
+      }
+
+    } catch(err) {
+      setTimeout(function() {
+        callback(new VError(err, "AssessmentCreatorUseCases.deepCloneAssessment"));
+      }, 0);
+    }
+  }
+
+  /**
    *
    * @param assessmentId
    * @param newValue

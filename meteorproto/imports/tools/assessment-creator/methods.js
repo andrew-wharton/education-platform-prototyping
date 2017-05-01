@@ -39,6 +39,25 @@ Meteor.methods({
     );
   },
 
+  "tools/assessment-creator/deepCloneAssessment"(assessmentId) {
+
+    check(assessmentId, String);
+
+    useCases.deepCloneAssessment(
+      {
+        assessmentId: assessmentId,
+        ownerId: Meteor.userId()
+      },
+      function(err, assessmentId) {
+        if(err) {
+          console.error(err);
+        } else {
+          console.log(assessmentId);
+        }
+      }
+    );
+  },
+
   "tools/assessment-creator/updateAssessmentTitle"(assessmentId, newValue) {
     // TODO check args
     useCases.updateAssessmentTitle(assessmentId, newValue);
