@@ -37,10 +37,7 @@ import { ToolsRootPageContainer }
 import { AssessmentCreatorPage }
   from '/imports/ui/pages/tools/AssessmentCreatorPage.jsx';
 
-//import { SignUpPageContainer } from '/imports/ui/pages/SignUpPage.jsx';
-//<Route
-//  path="/sign-up"
-//  component={SignUpPageContainer} />
+import { SignUpPageContainer } from '/imports/ui/pages/SignUpPage.jsx';
 
 /*
  Overrides for our custom styles
@@ -86,6 +83,9 @@ Meteor.startup(function () {
                      component={AssessmentCreatorPage} />
             </Route>
           </Route>
+          <Route
+            path="/sign-up"
+            component={SignUpPageContainer} />
         </Router>
       </IntlProvider>
     </MuiThemeProvider>, document.getElementById("react-root"));
