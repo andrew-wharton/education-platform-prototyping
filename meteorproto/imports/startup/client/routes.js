@@ -18,7 +18,7 @@ import { CalendarPlanningTermPageContainer }
 import { CalendarPlanningDayPage }
   from '/imports/ui/pages/planning/calendar/CalendarPlanningDayPage.jsx';
 import { LessonPlanningPageContainer }
-  from '/imports/ui/pages/planning/lesson/LessonPlanningPageContainer';
+  from '/imports/ui/pages/planning/lesson/LessonPlanningPage';
 import { AssessmentCreatorContainer }
   from '/imports/tools/assessment-creator/ui/AssessmentCreator';
 import LessonPlanOverview
@@ -36,6 +36,11 @@ import { ToolsRootPageContainer }
   from '/imports/ui/pages/tools/ToolsRootPageContainer.jsx';
 import { AssessmentCreatorPage }
   from '/imports/ui/pages/tools/AssessmentCreatorPage.jsx';
+
+//import { SignUpPageContainer } from '/imports/ui/pages/SignUpPage.jsx';
+//<Route
+//  path="/sign-up"
+//  component={SignUpPageContainer} />
 
 /*
  Overrides for our custom styles
