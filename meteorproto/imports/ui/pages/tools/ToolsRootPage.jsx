@@ -10,7 +10,6 @@ export const ToolsRootPage = React.createClass({
       <div className="tools-root-page">
         <MainToolBar />
         <main>
-          <h1>Tools</h1>
           {
             this.props.children
           }
