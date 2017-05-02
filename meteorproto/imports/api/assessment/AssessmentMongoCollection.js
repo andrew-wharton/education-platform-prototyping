@@ -20,6 +20,10 @@ var AssessmentSchema = new SimpleSchema({
   },
   ownerId: {
     type: String
+  },
+  parentId: {
+    type: String,
+    optional: true
   }
 });
 

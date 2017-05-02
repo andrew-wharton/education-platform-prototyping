@@ -14,6 +14,7 @@ export default class AssessmentItem {
     this.tags = [];
     this.attributes = {};
     this.ownerId = "";
+    this.parentId = "";
   }
 
   /**

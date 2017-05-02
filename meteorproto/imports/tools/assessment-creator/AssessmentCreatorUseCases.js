@@ -4,6 +4,7 @@ import _ from 'lodash';
 import vasync from 'vasync';
 import VError from 'verror';
 import assert from 'assert-plus';
+import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 import AssessmentItem from '/imports/api/assessment-item/AssessmentItem.js';
 import { AssessmentItemType }
@@ -63,10 +64,12 @@ export class AssessmentCreatorUseCases {
    * @param {object} args
    * @param {string} args.assessmentId
    * @param {string} args.ownerId
-   * @param callback
+   * @param {function} callback
    */
   deepCloneAssessment({assessmentId, ownerId}, callback) {
     try {
+
+      var self = this;
 
       assert.string(assessmentId, 'assessmentId');
       assert.string(ownerId, 'ownerId');
@@ -79,11 +82,11 @@ export class AssessmentCreatorUseCases {
         var clonedItemIds = [];
 
         vasync.waterfall([
-          function cloneAssessmentItems(next) {
+          Meteor.bindEnvironment(function cloneAssessmentItems(next) {
 
-            var assessmentItems = this._assessmentItemCollection.find({
-              id: {
-                $in: assessmentToClone.itemsIds
+            var assessmentItems = self._assessmentItemCollection.find({
+              _id: {
+                $in: assessmentToClone.itemIds
               }
             }).fetch();
 
@@ -93,15 +96,12 @@ export class AssessmentCreatorUseCases {
               clonedItemIds.push(it._id);
             });
 
-            this._assessmentItemCollection.rawCollection().insert(
+            self._assessmentItemCollection.rawCollection().insert(
               assessmentItems,
-              {
-                removeEmptyStrings: false
-              },
               next
             );
-          },
-          function cloneAssessment(numberOfDocsInserted, next) {
+          }),
+          Meteor.bindEnvironment(function cloneAssessment(numberOfDocsInserted, next) {
 
             // Add a 'link' back to the assessment from which it was cloned
             assessmentToClone.parentId = assessmentToClone._id;
@@ -109,7 +109,7 @@ export class AssessmentCreatorUseCases {
             assessmentToClone.itemIds = clonedItemIds;
             assessmentToClone.ownerId = ownerId;
 
-            this._assessmentCollection.insert(
+            self._assessmentCollection.insert(
               assessmentToClone,
               function handleResult(err, clonedAssessmentId) {
                 if(err) {
@@ -119,7 +119,7 @@ export class AssessmentCreatorUseCases {
                 }
               }
             );
-          }
+          })
         ], function handleWaterfallResult(err, result) {
           if(err) {
             callback(
