@@ -24,19 +24,25 @@ Meteor.methods({
     check(title, String);
 
     // TODO added itemIds, tags and attributes
-
-    useCases.createAssessment(
-      {
-        title: title ? title : ""
-      },
-      function(err, assessmentId) {
-        if(err) {
-          console.error(err);
-        } else {
-          console.log(assessmentId);
+    if(Meteor.user()) {
+      useCases.createAssessment(
+        {
+          assessment: {
+            title: title ? title : ""
+          },
+          ownerId: Meteor.userId()
+        },
+        function(err, assessmentId) {
+          if(err) {
+            console.error(err);
+          } else {
+            console.log(assessmentId);
+          }
         }
-      }
-    );
+      );
+    } else {
+      throw new Meteor.Error("401", "Unauthorised")
+    }
   },
 
   "tools/assessment-creator/deepCloneAssessment"(assessmentId) {

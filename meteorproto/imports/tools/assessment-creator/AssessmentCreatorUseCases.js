@@ -27,7 +27,7 @@ export class AssessmentCreatorUseCases {
    * @param assessment
    * @param {function} callback
    */
-  createAssessment(assessment, callback) {
+  createAssessment({assessment, ownerId}, callback) {
     try {
 
       assert.object(assessment, 'assessment');
@@ -37,18 +37,22 @@ export class AssessmentCreatorUseCases {
         title: "",
         itemIds: [],
         tags: [],
-        attributes: {}
+        attributes: {},
+        ownerId: ownerId
       };
 
       _.extend(templateAssessment, assessment);
 
-      this._assessmentCollection.insert(assessment, function(err, assessmentId) {
-        if(err) {
-          callback(new VError(err, "AssessmentCreatorUseCases.createAssessment.create"));
-        } else {
-          callback(null, assessmentId);
+      this._assessmentCollection.insert(
+        templateAssessment,
+        function handleInsertResult(err, assessmentId) {
+          if(err) {
+            callback(new VError(err, "AssessmentCreatorUseCases.createAssessment->handleInsertResult"));
+          } else {
+            callback(null, assessmentId);
+          }
         }
-      });
+      );
 
     } catch(err) {
       setTimeout(function() {
@@ -180,6 +184,7 @@ export class AssessmentCreatorUseCases {
     var templateItem = new AssessmentItem().toObject();
 
     _.extend(templateItem, item);
+    templateItem.ownerId = Meteor.userId();
 
     var itemId = this._assessmentItemCollection.insert(templateItem);
 
