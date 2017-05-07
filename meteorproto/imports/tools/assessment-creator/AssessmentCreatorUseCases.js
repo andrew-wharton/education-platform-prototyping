@@ -204,16 +204,16 @@ export class AssessmentCreatorUseCases {
   /**
    *
    * @param assessmentItemId
-   * @param value
+   * @param newQuestion
    */
-  updateAssessmentItemQuestion(assessmentItemId, value) {
+  updateAssessmentItemQuestion(assessmentItemId, newQuestion) {
     this._assessmentItemCollection.update(
       {
         _id: assessmentItemId
       },
       {
         $set: {
-          question: value
+          question: newQuestion
         }
       }
     );

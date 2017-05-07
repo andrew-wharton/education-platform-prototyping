@@ -88,12 +88,12 @@ Meteor.methods({
   /**
    *
    */
-    "tools/assessment-creator/updateAssessmentItemQuestion"(assessmentItemId, value) {
+    "tools/assessment-creator/updateAssessmentItemQuestion"(assessmentItemId, newQuestion) {
 
     check(assessmentItemId, String);
-    check(value, String);
+    check(newQuestion, String);
 
-    useCases.updateAssessmentItemQuestion(assessmentItemId, value, function (err) {
+    useCases.updateAssessmentItemQuestion(assessmentItemId, newQuestion, function (err) {
       if (err) {
         console.error(err);
       }
