@@ -4,6 +4,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor'
 import { createContainer } from 'meteor/react-meteor-data'
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
 import './SignIn.less';
 
@@ -50,18 +51,14 @@ export const SignIn = React.createClass({
           }
           <div className="actions">
             <div className="buttons">
-              <span
-                role="button"
-                className="login-button"
-                onClick={this.logIn}>
-                Log In
-              </span>
-              <span
-                role="button"
-                className="cancel-button"
-                onClick={this.props.closeHandler}>
-                Cancel
-              </span>
+              <RaisedButton
+                label="Log In"
+                onClick={this.logIn}
+                style={{margin: '1em'}} />
+              <RaisedButton
+                label="Cancel"
+                onClick={this.props.closeHandler}
+                style={{margin: '1em'}} />
             </div>
           </div>
         </div>
