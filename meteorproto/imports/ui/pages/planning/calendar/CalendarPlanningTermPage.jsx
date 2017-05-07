@@ -16,19 +16,26 @@ export class CalendarPlanningTermPage extends Component {
     return (
       <div className="calendar-planning-term-page">
         <section className="placeholder-content">
-          <p>My initial UI concept idea for this page is an infinite scrolling
+          <p>
+            My initial UI concept idea for this page is an infinite scrolling
             calendar view with one week per row, similar to the 'month' view in
             macOS's Calendar, or the 'multiweek' view in the calendar in
-            Thunderbird.</p>
+            Thunderbird.
+          </p>
           <figure>
             <img src="//static.whartonlabs.com/edu-proto/images/calendar-month-view.png" />
-            <figcaption>Fig. 1 - 'month' view in
-              macOS's Calendar</figcaption>
+            <figcaption>
+              Fig. 1 - 'month' view in macOS's Calendar
+            </figcaption>
           </figure>
-          <p>Each day could perhaps give a summary of the days lessons etc and
-            link to a calendar day view.</p>
-          <p>Below are links to specific lessons. They could be represented in
-            the UI in the same way as the coloured boxes in the calendar above.</p>
+          <p>
+            Each day could perhaps give a summary of the days lessons etc and
+            link to a calendar day view.
+          </p>
+          <p>
+            Below are links to specific lessons. They could be represented in
+            the UI in the same way as the coloured boxes in the calendar above.
+          </p>
           <ul>
             {
               this.props.lessons.map(this.renderLessonLink)
@@ -38,15 +45,14 @@ export class CalendarPlanningTermPage extends Component {
             <button onClick={this.props.createLesson}>Create new lesson</button>
           </p>
         </section>
-
       </div>
     );
   }
 
   renderLessonLink(lesson) {
     return (
-      <li key={lesson.id}>
-        <Link to={`/planning/lessons/${lesson.id}`}>{lesson.id}</Link>
+      <li key={lesson._id}>
+        <Link to={`/planning/lessons/${lesson._id}`}>{lesson._id}</Link>
       </li>
     );
   }
