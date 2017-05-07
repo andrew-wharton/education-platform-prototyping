@@ -37,9 +37,14 @@ export const AssessmentCreator = React.createClass({
     return (
       <div>
         <h2>Assessments</h2>
-        <div className="create-assessment">
-          <button onClick={this.createNewAssessment}>New Assessment</button>
-        </div>
+        {
+          this.props.user ?
+            <div className="create-assessment">
+              <button onClick={this.createNewAssessment}>New Assessment</button>
+            </div> :
+            null
+        }
+
         {
           this.props.assessments.map(this.renderAssessmentLink)
         }
@@ -57,9 +62,13 @@ export const AssessmentCreator = React.createClass({
               <span className="no-title">(No title)</span>
           }
         </Link>
-        <button onClick={this.createNewVersion.bind(this, assessment._id)}>
-          Create New Version
-        </button>
+        {
+          this.props.user ?
+            <button onClick={this.createNewVersion.bind(this, assessment._id)}>
+              Create New Version
+            </button> :
+            null
+        }
       </div>
     );
   },
@@ -67,6 +76,7 @@ export const AssessmentCreator = React.createClass({
   renderEditor() {
     return (
       <AssessmentEditorContainer
+        rootPath={this.props.path}
         assessment={this.props.assessment} />
     )
   },
@@ -91,6 +101,7 @@ export const AssessmentCreatorContainer = createContainer(function (props) {
   Meteor.subscribe('assessments', {});
 
   return {
+    user: Meteor.user(),
     assessments: AssessmentMongoCollection.find({}).fetch(),
     assessment: AssessmentMongoCollection.findOne({_id: props.assessmentId})
   };
