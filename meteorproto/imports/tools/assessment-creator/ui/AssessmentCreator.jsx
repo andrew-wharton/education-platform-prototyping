@@ -73,7 +73,7 @@ export const AssessmentCreator = React.createClass({
 
   createNewAssessment(event) {
     Meteor.call("tools/assessment-creator/createAssessment", {
-      title: '(New Assessment)'
+      title: 'New Assessment'
     })
   },
 
