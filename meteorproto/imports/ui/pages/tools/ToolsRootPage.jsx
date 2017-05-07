@@ -6,9 +6,10 @@ import './ToolsRootPage.less';
 export const ToolsRootPage = React.createClass({
 
   render() {
+
+    //<MainToolBar />
     return (
       <div className="tools-root-page">
-        <MainToolBar />
         <main>
           {
             this.props.children
