@@ -1,5 +1,6 @@
 import React from 'react';
-import { Header } from '/imports/ui/components/Header.jsx';
+import { Meteor } from 'meteor/meteor';
+import { HeaderContainer } from '/imports/ui/components/Header.jsx';
 import { Footer } from '/imports/ui/components/Footer.jsx';
 import './ApplicationRootPage.less';
 
@@ -11,7 +12,7 @@ export const ApplicationRootPage = React.createClass({
   render() {
     return (
       <div>
-        <Header />
+        <HeaderContainer />
         <div className="main-content">
           {
             this.props.children
