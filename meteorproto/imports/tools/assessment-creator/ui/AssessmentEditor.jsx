@@ -40,7 +40,9 @@ const AssessmentEditor = React.createClass({
               value={this.state.title}
               onChange={this.updateTitleState}
               onBlur={this.updateTitle}
-              fullWidth={true} />
+              fullWidth={true}
+              multiLine={true}
+              rows={3} />
           </div>
           <div className="assessment-items">
             {
