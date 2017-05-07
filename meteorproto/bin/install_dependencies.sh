@@ -3,7 +3,8 @@ set -e
 
 echo "Installing build and network/application debug dependencies"
 apt-get update -y
-apt-get install -y curl bzip2 build-essential python git wget inetutils-ping netcat
+apt-get install -y curl bzip2 build-essential python git wget inetutils-ping netcat bsdtar
+export tar='bsdtar'
 
 #echo "Installing application dependencies"
 ## TODO lock these dependencies to specific versions so we get more repeatable builds
