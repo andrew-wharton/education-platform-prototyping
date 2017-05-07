@@ -5,11 +5,10 @@
  */
 export default class AssessmentItem {
 
-  constructor(itemFilelds) {
+  constructor(itemFields) {
     this.type = null;
     this.question = "";
     this.choices = [];
-    this.correctChoices = [];
     this.taskDescription = "";
     this.tags = [];
     this.attributes = {};
@@ -29,10 +28,11 @@ export default class AssessmentItem {
           type: this.type,
           question: this.question,
           choices: this.choices,
-          correctChoices: this.correctChoices,
           taskDescription: this.taskDescription,
           tags: this.tags,
-          attributes: this.attributes
+          attributes: this.attributes,
+          ownerId: this.ownerId,
+          parentId: this.parentId
         }
       )
     );
