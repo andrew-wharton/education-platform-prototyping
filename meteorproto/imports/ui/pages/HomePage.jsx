@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { MainToolBar } from '/imports/ui/components/MainToolBar.jsx';
+import RaisedButton from 'material-ui/RaisedButton';
 import './HomePage.less';
 
 /**
@@ -12,14 +14,13 @@ export const HomePage = React.createClass({
   },
 
   render: function() {
+    //<MainToolBar />
     return (
       <div className="home-page">
-        <MainToolBar />
         <section className="placeholder-content">
-          <p>Here we should have a dashboard for the user which gives them an
-            overview of everything, or then an onboarding for new users.</p>
-          <p>It should be user/role specific, so students would likely have a
-            different dashboard to educators</p>
+          <Link to="/tools/assessment-creator">
+            <RaisedButton label="Assessment Creator" />
+          </Link>
         </section>
       </div>
     );
