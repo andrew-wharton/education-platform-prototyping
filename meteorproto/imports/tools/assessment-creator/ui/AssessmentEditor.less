@@ -1,9 +1,13 @@
 
 
 .AssessmentEditor {
-  display: flex;
+
   margin: 0.5em;
   padding: 0.5em;
+}
+
+.AssessmentEditor .editor-views {
+  display: flex;
 }
 
 .AssessmentEditor .outline {
@@ -12,7 +16,14 @@
   margin: 0.5em;
 }
 
-.AssessmentEditor .outline .assessment-item-viewer-wrapper {
+.AssessmentEditor .outline h2 {
+  font-size: 1.3em;
+  font-weight: 500;
+  padding: 1em 0;
+}
+
+.AssessmentEditor .outline .editable .AssessmentItemViewer:hover {
+  background-color: #eee;
   cursor: pointer;
 }
 

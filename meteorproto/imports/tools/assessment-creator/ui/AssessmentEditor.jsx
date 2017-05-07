@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { Link } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import { TextField } from 'material-ui';
@@ -31,66 +32,97 @@ const AssessmentEditor = React.createClass({
   },
 
   render() {
+
+    //<AssessmentItemSearch />
+
     return (
       <div className="AssessmentEditor">
-        <div className="outline">
-          <div className="assessment-fields">
-            <TextField
-              floatingLabelText="Assessment Title"
-              value={this.state.title}
-              onChange={this.updateTitleState}
-              onBlur={this.updateTitle}
-              fullWidth={true}
-              multiLine={true}
-              rows={3} />
-          </div>
-          <div className="assessment-items">
+        <div>
+          <Link to={this.props.rootPath} >Back to all assessments</Link>
+        </div>
+        <div className="editor-views">
+          <div className="outline">
+            <div className="assessment-fields">
+              {
+                this.props.userIsOwner ?
+                  <TextField
+                    floatingLabelText="Assessment Title"
+                    value={this.state.title}
+                    onChange={this.updateTitleState}
+                    onBlur={this.updateTitle}
+                    fullWidth={true}
+                    multiLine={true}
+                    rows={3} /> :
+                  <h2>
+                    {
+                      this.state.title
+                    }
+                  </h2>
+              }
+            </div>
+            <div className="assessment-items">
+              {
+                this.props.assessment.itemIds.map(this.renderAssessmentItem)
+              }
+              {
+                !this.props.assessmentItemsReady ?
+                  <div>Loading...</div> :
+                  null
+              }
+            </div>
             {
-              this.props.assessment.itemIds.map(this.renderAssessmentItem)
-            }
-            {
-              !this.props.assessmentItemsReady ?
-                <div>Loading...</div> :
+              this.props.userIsOwner ?
+                <div className="assessment-items-tools">
+                  <ul>
+                    <li>
+                      <button
+                        onClick={this.addItem.bind(this,
+                      AssessmentItemType.MULTIPLE_CHOICE)}>
+                        Add Multi Choice Question
+                      </button>
+                    </li>
+                  </ul>
+                </div> :
                 null
             }
           </div>
-          <div className="assessment-items-tools">
-            <AssessmentItemSearch />
-            <ul>
-              <li>
-                <button
-                  onClick={this.addItem.bind(this, AssessmentItemType.MULTIPLE_CHOICE)}>
-                  Add Multi Choice Question
-                </button>
-              </li>
-            </ul>
+          <div className="details">
+            {
+              this.state.selectedItemId ?
+                <AssessmentItemEditorContainer
+                  assessmentItemsReady={this.props.assessmentItemsReady}
+                  assessmentItemId={this.state.selectedItemId} /> :
+                null
+            }
           </div>
         </div>
-        <div className="details">
-          {
-            this.state.selectedItemId ?
-              <AssessmentItemEditorContainer
-                assessmentItemsReady={this.props.assessmentItemsReady}
-                assessmentItemId={this.state.selectedItemId} /> :
-              null
-          }
-        </div>
+
       </div>
     );
   },
 
   renderAssessmentItem(assessmentItemId, index) {
-    return (
-      <div
-        className="assessment-item-viewer-wrapper"
-        onClick={this.selectAssessmentItemId.bind(this, assessmentItemId)} >
+    if(this.props.user && this.props.assessment.ownerId === this.props.user._id) {
+      return (
+        <div
+          className="editable"
+          onClick={this.selectAssessmentItemId.bind(this, assessmentItemId)} >
+          <AssessmentItemViewerContainer
+            index={index}
+            isSelected={this.state.selectedItemId === assessmentItemId}
+            itemId={assessmentItemId}
+            key={assessmentItemId} />
+        </div>
+      );
+    } else {
+      return (
         <AssessmentItemViewerContainer
           index={index}
           isSelected={this.state.selectedItemId === assessmentItemId}
           itemId={assessmentItemId}
           key={assessmentItemId} />
-      </div>
-    );
+      );
+    }
   },
 
   updateTitleState(event) {
@@ -137,8 +169,12 @@ export const AssessmentEditorContainer = createContainer(function (props) {
     }
   });
 
+  var user = Meteor.user();
+
   return {
-    assessmentItemsReady: assessmentItemsHandle.ready()
+    assessmentItemsReady: assessmentItemsHandle.ready(),
+    user: user,
+    userIsOwner: user ? user._id === props.assessment.ownerId : false
   };
 
 }, AssessmentEditor);
