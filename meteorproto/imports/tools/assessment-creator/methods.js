@@ -64,9 +64,20 @@ Meteor.methods({
     );
   },
 
-  "tools/assessment-creator/updateAssessmentTitle"(assessmentId, newValue) {
-    // TODO check args
-    useCases.updateAssessmentTitle(assessmentId, newValue);
+  "tools/assessment-creator/updateAssessmentTitle"(assessmentId, newTitle) {
+
+    check(assessmentId, String);
+    check(newTitle, String);
+
+    useCases.updateAssessmentTitle(
+      assessmentId,
+      newTitle,
+      function handleUseCaseResult(err) {
+        if (err) {
+          console.error(err);
+        }
+      }
+    );
   },
 
   "tools/assessment-creator/addNewItemToAssessment"(assessmentId, item) {
