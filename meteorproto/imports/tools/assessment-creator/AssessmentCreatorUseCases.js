@@ -100,10 +100,14 @@ export class AssessmentCreatorUseCases {
               clonedItemIds.push(it._id);
             });
 
-            self._assessmentItemCollection.rawCollection().insert(
-              assessmentItems,
-              next
-            );
+            if(clonedItemIds.length > 0) {
+              self._assessmentItemCollection.rawCollection().insert(
+                assessmentItems,
+                next
+              );
+            } else {
+              next(null, 0);
+            }
           }),
           Meteor.bindEnvironment(function cloneAssessment(numberOfDocsInserted, next) {
 
