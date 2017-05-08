@@ -51,8 +51,7 @@ const AssessmentEditor = React.createClass({
                     onChange={this.updateTitleState}
                     onBlur={this.updateTitle}
                     fullWidth={true}
-                    multiLine={true}
-                    rows={3} /> :
+                    multiLine={true} /> :
                   <h2>
                     {
                       this.state.title
