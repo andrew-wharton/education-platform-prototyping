@@ -28,8 +28,7 @@ const AssessmentEditor = React.createClass({
   getInitialState() {
     return {
       title: this.props.assessment.title,
-      selectItemId: this.props.assessment.itemIds.length > 0 ?
-        this.props.assessment.itemIds : null
+      selectedItemId: null
     }
   },
 
@@ -134,6 +133,9 @@ const AssessmentEditor = React.createClass({
   },
 
   removeAssessmentItem(assessmentItemId) {
+
+    var self = this;
+
     Meteor.call(
       "tools/assessment-creator/removeAssessmentItem",
       {
@@ -143,6 +145,10 @@ const AssessmentEditor = React.createClass({
       function(err) {
         if(err) {
           console.error(err);
+        } else {
+          self.setState({
+            selectedItemId: null
+          })
         }
       }
     )
