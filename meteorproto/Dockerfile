@@ -1,9 +1,5 @@
-FROM ubuntu:16.04
+FROM andrewwharton/edu-proto-base:latest
 MAINTAINER Andrew Wharton <andrew@whartonlabs.com>
-
-# Copy the contents of our build scripts directory to the image
-COPY bin/install_dependencies.sh /var/tmp/install_dependencies.sh
-RUN bash /var/tmp/install_dependencies.sh
 
 # Copy across our build script
 COPY bin/build_app.sh /opt/build_app.sh
