@@ -181,9 +181,9 @@ export class AssessmentCreatorUseCases {
    *
    * @param assessmentId
    * @param item
-   * @param cb
+   * @param callback
    */
-  addNewItemToAssessment(assessmentId, item, cb) {
+  addNewItemToAssessment(assessmentId, item, callback) {
 
     var templateItem = new AssessmentItem().toObject();
 
@@ -200,7 +200,30 @@ export class AssessmentCreatorUseCases {
         $push: {
           "itemIds": itemId
         }
-      }
+      },
+      callback
+    );
+
+  }
+
+  /**
+   *
+   * @param assessmentId
+   * @param assessmentItemId
+   * @param callback
+   */
+  removeAssessmentItem(assessmentId, assessmentItemId, callback) {
+
+    this._assessmentCollection.update(
+      {
+        _id: assessmentId
+      },
+      {
+        $pull: {
+          "itemIds": assessmentItemId
+        }
+      },
+      callback
     );
 
   }
@@ -209,8 +232,9 @@ export class AssessmentCreatorUseCases {
    *
    * @param assessmentItemId
    * @param newQuestion
+   * @param callback
    */
-  updateAssessmentItemQuestion(assessmentItemId, newQuestion) {
+  updateAssessmentItemQuestion(assessmentItemId, newQuestion, callback) {
     this._assessmentItemCollection.update(
       {
         _id: assessmentItemId
@@ -219,7 +243,8 @@ export class AssessmentCreatorUseCases {
         $set: {
           question: newQuestion
         }
-      }
+      },
+      callback
     );
   }
 

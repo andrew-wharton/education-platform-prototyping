@@ -92,6 +92,19 @@ Meteor.methods({
     });
   },
 
+  "tools/assessment-creator/removeAssessmentItem"({assessmentId, assessmentItemId}) {
+
+    check(assessmentId, String);
+    check(assessmentItemId, String);
+
+    useCases.removeAssessmentItem(assessmentId, assessmentItemId, function (err) {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+  },
+
   "tools/assessment-creator/addExistingItemToAssessment"(assessmentId, assessmentItemId) {
     //useCases.addNewItemToAssessment()
   },

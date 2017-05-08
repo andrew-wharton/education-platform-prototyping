@@ -4,7 +4,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { TextField } from 'material-ui';
+import TextField from 'material-ui/TextField';
+import FontIcon from 'material-ui/FontIcon';
+import IconButton from 'material-ui/IconButton';
 import { AssessmentItemType }
   from '/imports/api/assessment-item/AssessmentItemType.js';
 import { AssessmentItemViewerContainer } from './AssessmentItemViewer.jsx';
@@ -104,24 +106,46 @@ const AssessmentEditor = React.createClass({
     if(this.props.user && this.props.assessment.ownerId === this.props.user._id) {
       return (
         <div
-          className="editable"
+          className={`assessment-item editable ${
+            this.state.selectedItemId === assessmentItemId ?
+            'selected': ''}`}
           onClick={this.selectAssessmentItemId.bind(this, assessmentItemId)} >
           <AssessmentItemViewerContainer
             index={index}
-            isSelected={this.state.selectedItemId === assessmentItemId}
             itemId={assessmentItemId}
             key={assessmentItemId} />
+          <div className="remove">
+            <IconButton
+              iconClassName="material-icons"
+              onClick={this.removeAssessmentItem.bind(this, assessmentItemId)}>
+              delete
+            </IconButton>
+          </div>
         </div>
       );
     } else {
       return (
         <AssessmentItemViewerContainer
           index={index}
-          isSelected={this.state.selectedItemId === assessmentItemId}
           itemId={assessmentItemId}
           key={assessmentItemId} />
       );
     }
+  },
+
+  removeAssessmentItem(assessmentItemId) {
+    Meteor.call(
+      "tools/assessment-creator/removeAssessmentItem",
+      {
+        assessmentId: this.props.assessment._id,
+        assessmentItemId: assessmentItemId
+      },
+      function(err) {
+        if(err) {
+          console.error(err);
+        }
+      }
+    )
   },
 
   updateTitleState(event) {

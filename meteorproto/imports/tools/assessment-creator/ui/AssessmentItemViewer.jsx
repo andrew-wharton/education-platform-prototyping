@@ -68,7 +68,7 @@ const AssessmentItemViewer = React.createClass({
 
   render() {
     return (
-      <div className={`AssessmentItemViewer ${this.props.isSelected ? 'is-selected': ''}`}>
+      <div className="AssessmentItemViewer">
         {
           this.props.assessmentItem ?
             RENDERERS[this.props.assessmentItem.type](

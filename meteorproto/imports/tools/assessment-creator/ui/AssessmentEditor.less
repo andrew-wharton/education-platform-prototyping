@@ -22,9 +22,24 @@
   padding: 1em 0;
 }
 
-.AssessmentEditor .outline .editable .AssessmentItemViewer:hover {
+.AssessmentEditor .outline .assessment-item {
+  position: relative;
+  padding-right: 2em;
+}
+
+.AssessmentEditor .outline .assessment-item .remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.AssessmentEditor .outline .assessment-item.editable:hover {
   background-color: #eee;
   cursor: pointer;
+}
+
+.AssessmentEditor .outline .assessment-item.selected {
+  background-color: #ddd;
 }
 
 .AssessmentEditor .details {
